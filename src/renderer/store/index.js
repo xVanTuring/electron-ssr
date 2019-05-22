@@ -1,10 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import defaultConfig from '../../shared/config'
-import { merge, clone, request, isSubscribeContentValid, getUpdatedKeys, isConfigEqual, somePromise } from '../../shared/utils'
+import {
+  merge,
+  clone,
+  request,
+  isSubscribeContentValid,
+  getUpdatedKeys,
+  isConfigEqual,
+  somePromise
+} from '../../shared/utils'
 import Config from '../../shared/ssr'
 import { syncConfig } from '../ipc'
 import { STORE_KEY_FEATURE, STORE_KEY_SSR_METHODS, STORE_KEY_SSR_PROTOCOLS, STORE_KEY_SSR_OBFSES } from '../constants'
+
 Vue.use(Vuex)
 
 // 当前编辑的配置项
@@ -31,9 +40,29 @@ let obfses
 if (storedMethods) {
   methods = JSON.parse(storedMethods)
 } else {
-  methods = ['none', 'aes-128-cfb', 'aes-192-cfb', 'aes-256-cfb', 'aes-128-cfb8', 'aes-192-cfb8', 'aes-256-cfb8',
-    'aes-128-ctr', 'aes-192-ctr', 'aes-256-ctr', 'camellia-128-cfb', 'camellia-192-cfb', 'camellia-256-cfb',
-    'bf-cfb', 'rc4', 'rc4-md5', 'rc4-md5-6', 'salsa20', 'chacha20', 'chacha20-ietf'
+  methods = [
+    'none',
+    'aes-128-cfb',
+    'aes-192-cfb',
+    'aes-256-cfb',
+    'aes-128-cfb8',
+    'aes-192-cfb8',
+    'aes-256-cfb8',
+    'aes-128-ctr',
+    'aes-192-ctr',
+    'aes-256-ctr',
+    'camellia-128-cfb',
+    'camellia-192-cfb',
+    'camellia-256-cfb',
+    'bf-cfb',
+    'rc4',
+    'rc4-md5',
+    'rc4-md5-6',
+    'salsa20',
+    'xsalsa20',
+    'chacha20',
+    'xchacha20',
+    'chacha20-ietf'
   ]
   ls.setItem(STORE_KEY_SSR_METHODS, JSON.stringify(methods))
 }
@@ -41,8 +70,20 @@ if (storedMethods) {
 if (storedProtocols) {
   protocols = JSON.parse(storedProtocols)
 } else {
-  protocols = ['origin', 'verify_deflate', 'auth_sha1_v4', 'auth_aes128_md5',
-    'auth_aes128_sha1', 'auth_chain_a', 'auth_chain_b'
+  protocols = [
+    'origin',
+    'verify_deflate',
+    'auth_sha1_v4',
+    'auth_aes128_md5',
+    'auth_aes128_sha1',
+    'auth_chain_a',
+    'auth_chain_b',
+    'auth_chain_c',
+    'auth_chain_d',
+    'auth_chain_e',
+    'auth_chain_f',
+    'auth_akarin_rand',
+    'auth_akarin_spec_a'
   ]
   ls.setItem(STORE_KEY_SSR_PROTOCOLS, JSON.stringify(protocols))
 }
@@ -50,7 +91,14 @@ if (storedProtocols) {
 if (storedObfses) {
   obfses = JSON.parse(storedObfses)
 } else {
-  obfses = ['plain', 'http_simple', 'http_post', 'ramdom_head', 'tls1.2_ticket_auth', 'tls1.2_ticket_fastauth']
+  obfses = [
+    'plain',
+    'http_simple',
+    'http_post',
+    'ramdom_head',
+    'tls1.2_ticket_auth',
+    'tls1.2_ticket_fastauth'
+  ]
   ls.setItem(STORE_KEY_SSR_OBFSES, JSON.stringify(obfses))
 }
 
@@ -81,7 +129,9 @@ export default new Vuex.Store({
       const changed = getUpdatedKeys(state.appConfig, targetConfig)
       if (changed.length) {
         const extractConfig = {}
-        changed.forEach(key => { extractConfig[key] = targetConfig[key] })
+        changed.forEach(key => {
+          extractConfig[key] = targetConfig[key]
+        })
         merge(state.appConfig, extractConfig)
         console.log('config updated: ', extractConfig)
         if (sync) {
@@ -118,7 +168,11 @@ export default new Vuex.Store({
     // 重置状态
     resetState (state) {
       merge(state.editingConfig, state.editingConfigBak)
-      merge(state.view, { page: views.indexOf(state.view.page) >= 2 ? views[2] : state.view.page, tab: 'common', active: false })
+      merge(state.view, {
+        page: views.indexOf(state.view.page) >= 2 ? views[2] : state.view.page,
+        tab: 'common',
+        active: false
+      })
       state.editingGroup.title = groupTitleBak
     },
     // 更新当前编辑的组

@@ -40,10 +40,10 @@ ipcMain.on(events.EVENT_APP_HIDE_WINDOW, () => {
   updateAppConfig(data, true)
 }).on(events.EVENT_SSR_DOWNLOAD_RENDERER, e => {
   // 下载ssr
-  logger.info('start download ssr')
+  logger.info('start download ssrr')
   // 自动下载ssr项目
-  downloadGitRepo(`shadowsocksr-backup/shadowsocksr#dev`, defaultSSRDownloadDir, err => {
-    logger[err ? 'error' : 'info'](`ssr download ${err ? 'error' : 'success'}`)
+  downloadGitRepo(`shadowsocksrr/shadowsocksr#akkariiin/master`, defaultSSRDownloadDir, err => {
+    logger[err ? 'error' : 'info'](`ssrr download ${err ? 'error' : 'success'}`)
     e.sender.send(events.EVENT_SSR_DOWNLOAD_MAIN, err ? err.message : null)
   })
 }).on(events.EVENT_CONFIG_COPY_CLIPBOARD, () => {

@@ -18,7 +18,9 @@ export const readyPromise = new Promise(resolve => {
 
 // 检查python是否安装
 if (!isPythonInstalled) {
-  dialog.showErrorBox('错误', 'python未安装，请先安装python否则软件将无法使用')
+  dialog.showErrorBox('警告', '未检测到python' +
+    '\n本程序所使用的后端为python版ssr/ssrr' +
+    '\n请确保已安装python且可正常使用，否则软件可能无法正常运行')
   // python未安装时自动下载并安装
   // require('./python').init()
 }
