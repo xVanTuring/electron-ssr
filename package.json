@@ -1,13 +1,13 @@
 {
   "name": "electron-ssr",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "author": "erguotou <erguotou525@gmail.com>",
   "description": "Cross platform ShadowsocksR GUI client built with electron",
-  "homepage": "https://github.com/erguotou520/electron-ssr/",
+  "homepage": "https://github.com/shadowsocksrr/electron-ssr/",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/erguotou520/electron-ssr"
+    "url": "https://github.com/shadowsocksrr/electron-ssr"
   },
   "main": "./dist/electron/main.js",
   "scripts": {
