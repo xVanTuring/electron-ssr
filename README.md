@@ -27,7 +27,7 @@
 
 ## Download
 
-Visit the releases page [Github release](https://github.com/shadowsocksrr/electron-ssr/releases):
+Visit the releases page [Github release](/releases/latest):
 
 - Windows `electron-ssr-setup-x.x.x.exe`
 - Mac `electron-ssr-x.x.x.dmg`
@@ -110,7 +110,7 @@ npm run lint
 
 ## Changelog
 
-Please check the [release notes](https://github.com/shadowsocksrr/electron-ssr/releases).
+Please check the [release notes](/releases/latest).
 
 ## ShadowsocksR reference documents
 
