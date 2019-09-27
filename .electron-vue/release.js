@@ -55,9 +55,9 @@ function release () {
     config: {
       productName: 'electron-ssr',
       appId: 'me.erguotou.ssr',
-      artifactName: '${productName}-${version}.${ext}',
-      compression: 'maximum',
-      copyright: 'erguotou525@gmail.com',
+      artifactName: '${productName}.${ext}',
+      compression: 'normal',
+      copyright: 'erguotou525@gmail.com & xVanTuring@outlook.com',
       files,
       extraFiles: extraFiles,
       directories: {
@@ -113,8 +113,8 @@ function release () {
         synopsis: pkg.description,
         target: [
           //'deb',
-          //'rpm',
-          'tar.gz',
+          'rpm',
+          //'tar.gz',
           //'pacman',
           //'appImage'
         ],
