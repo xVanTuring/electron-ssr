@@ -112,11 +112,11 @@ function release () {
         category: 'Development',
         synopsis: pkg.description,
         target: [
-          'deb',
-          'rpm',
+          //'deb',
+          //'rpm',
           'tar.gz',
-          'pacman',
-          'appImage'
+          //'pacman',
+          //'appImage'
         ],
         desktop: {
           Name: 'electron-ssr',
