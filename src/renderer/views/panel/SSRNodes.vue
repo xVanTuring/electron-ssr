@@ -102,15 +102,23 @@ export default {
         }
       }
       // 选中的是配置节点
-      const currentGroup = this.selectedConfigNode.group || '未分组'
-      const group = this.groupedConfigs[currentGroup]
-      const inGroupIndex = group.indexOf(this.selectedConfigNode)
-      return {
-        remove: false,
-        // 前一项不存在或前一项是分组节点
-        up: inGroupIndex <= 0,
-        // 后一项不存在或后一项是分组节点
-        down: inGroupIndex >= group.length - 1
+      if (this.selectedConfigNode) {
+        const currentGroup = this.selectedConfigNode.group || '未分组'
+        const group = this.groupedConfigs[currentGroup]
+        const inGroupIndex = group.indexOf(this.selectedConfigNode)
+        return {
+          remove: false,
+          // 前一项不存在或前一项是分组节点
+          up: inGroupIndex <= 0,
+          // 后一项不存在或后一项是分组节点
+          down: inGroupIndex >= group.length - 1
+        }
+      } else {
+        return {
+          remove: false,
+          up: false,
+          down: false
+        }
       }
     }
   },
