@@ -45,7 +45,7 @@ Visit the releases page [Github release](../../releases/latest):
 
 ## Shortcuts
 
-The shortcuts were originally added to solve the problem that some Linux distributions cannot display the icon in the top bar. Therefore its content menu cannot be used. Of course on other systems the shortcut can be turned off in the settings.
+The shortcuts were originally added to solve the problem that some Linux distributions cannot display the icon in the top bar. Therefore its content menu cannot be used. Of course on other systems the shortcut can be turned off in the settings.
 
 ### Global shortcuts
 
