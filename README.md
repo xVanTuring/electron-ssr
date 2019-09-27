@@ -27,7 +27,7 @@
 
 ## Download
 
-Visit the releases page [Github release](/releases/latest):
+Visit the releases page [Github release](../../releases/latest):
 
 - Windows `electron-ssr-setup-x.x.x.exe`
 - Mac `electron-ssr-x.x.x.dmg`
@@ -88,7 +88,7 @@ Feel free to propose a new revision.
 
 [![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/erguotou520)
 
-## 开发和构建
+## Build
 
 ``` bash
 # or npm install
@@ -110,7 +110,7 @@ npm run lint
 
 ## Changelog
 
-Please check the [release notes](/releases/latest).
+Please check the [release notes](../../releases/latest).
 
 ## ShadowsocksR reference documents
 
