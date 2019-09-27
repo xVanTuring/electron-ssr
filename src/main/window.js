@@ -23,7 +23,7 @@ export function createWindow () {
     minimizable: false,
     maximizable: false,
     show: false,
-    webPreferences: { webSecurity: process.env.NODE_ENV !== 'development' }
+    webPreferences: { webSecurity: process.env.NODE_ENV !== 'development', nodeIntegration: true }
   })
   mainWindow.setMenu(null)
   mainWindow.loadURL(winURL)
