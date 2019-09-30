@@ -1,64 +1,66 @@
-# ShadowsocksR跨平台客户端
+# ShadowsocksR cross-platform client
 
-这是一个跨平台（支持Windows MacOS Linux系统）的`ShadowsocksR`客户端桌面应用，它功能丰富，支持windows版大部分功能，更有更多人性化功能。它是开源的，它来源于开源，回馈以开源。
+[中文](./README-CN.md)
 
-## 功能特色
+`ShadowsocksR` is a cross-platform desktop client with support for Windows, MacOS and Linux. It is feature-rich, supports most of the features of the Windows version and has more user-friendly features. It is open source, is based on open source projects and gives back to the open source community.
 
-- 支持手动添加配置
-- 支持服务器订阅更新，复制该地址测试
+## Features
 
-  `https://raw.githubusercontent.com/erguotou520/electron-ssr/redesign/docs/assets/subscribe.txt`
-- 支持二维码扫描(请确保屏幕中只有一个有效的二维码)，扫描该二维码测试
+- Support for manual configuration
+- Support for automatic server subscription update. Copy this link to test:
+
+  `https://raw.githubusercontent.com/shadowsocksrr/electron-ssr/master/docs/assets/subscribe.txt`
+- Support for QR code scanning (Please make sure there is only one valid QR code on the screen). Scan this QR code to test:
 
   ![](docs/assets/scan.jpg)
-- 支持从剪贴板复制、从配置文件导入等方式添加配置
-- 支持复制二维码图片、复制SSR链接(右键应用内二维码，点击右键菜单中的复制)
-- 支持通过点击ss/ssr链接添加配置并打开应用(仅Mac和Windows)，[因Github平台限制，请前往该地址点击测试](https://erguotou520.github.io/electron-ssr)
-- 支持切换系统代理模式:PAC、全局、不代理
-- [内置http_proxy服务](docs/HTTP_PROXY.md)，可在选项中开启或关闭
-- 支持配置项变更
-- 更多功能尽在任务栏菜单中
+- Support for importing the configuration from the clipboard, configuration file and other methods
+- Support for copying QR codes and copying the ssr link (right click on the QR code and select copy in the context menu)
+- Support for adding configurations and opening the application by clicking the ss/ssr link (Mac and Windows only). Please use the link above to test.
+- Support for switching the system proxy mode: PAC, global proxy, no proxy
+- [Built-in http_proxy](docs/HTTP_PROXY.md), can be turned on on or off in the options
+- Support for changing the configuration
+- Additional features in the menu bar
 
-<!-- ## Telegram交流
+<!-- ## Telegram group
 
 [![](https://img.shields.io/badge/Telegram-electron--ssr-blue.svg)](https://t.me/joinchat/E7ViZhJAZpKtnIJy9WepDA) -->
 
-## 下载
+## Download
 
-下载地址见[Github release](https://github.com/erguotou520/electron-ssr/releases)，对应的操作系统下载的文件为
+Visit the releases page [Github release](../../releases/latest):
 
 - Windows `electron-ssr-setup-x.x.x.exe`
 - Mac `electron-ssr-x.x.x.dmg`
-- Linux 优先建议下载`electron-ssr-x.x.x.AppImage`，直接双击运行。如果无法使用或者想直接下载自己系统专用包请看下一条
-- Arch或者基于Arch的系统，下载`electron-ssr-x.x.x.pacman`
-- RedHat系列的系统，下载`electron-ssr-x.x.x.rpm`
-- Debian系列的系统，下载`electron-ssr-x.x.x.deb`
-- 系统Linux系统或者通用Linux系统可下载`electron-ssr-x.x.x.tar.gz`（不会使用.tar.gz的请自行百度）
+- Linux (recommended) `electron-ssr-x.x.x.AppImage`, double click to run. If you cannot use it or want to download your own system-specific package please use the following options
+- Arch or Arch-based distributions `electron-ssr-x.x.x.pacman`
+- RedHat derivatives `electron-ssr-x.x.x.rpm`
+- Debian derivatives `electron-ssr-x.x.x.deb`
+- Other Linux distributions `electron-ssr-x.x.x.tar.gz`
 
-## 配置文件位置
+## Configuration file location
 
 - Windows `C:\Users\{your username}\AppData\Roaming\electron-ssr\gui-config.json`
 - Mac `~/Library/Application Support/electron-ssr/gui-config.json`
 - Linux `~/.config/gui-config.json`
 
-## 快捷键
+## Shortcuts
 
-加入快捷键本来是为了解决部分Linux发行版无法显示图标导致功能无法使用而加入的，当然其它系统也是可以使用的，同时支持在设置中进行开启/关闭以及更换按键的操作。
+The shortcuts were originally added to solve the problem that some Linux distributions cannot display the icon in the top bar. Therefore its content menu cannot be used. Of course on other systems the shortcut can be turned off in the settings.
 
-### 全局快捷键
+### Global shortcuts
 
-- `CommandOrControl+Shift+W` 切换主窗口显隐
-- `未设置` 切换系统代理
+- `CommandOrControl+Shift+W` show/hide main window
+- `not assigned` switch system proxy mode
 
-### 应用内快捷键
-- `CommandOrControl+Shift+B` 切换是否显示操作菜单，仅Linux可用
+### In-app shortcuts
+- `CommandOrControl+Shift+B` show/hide the menu bar, only available on Linux
 
-## 已知Bug
+## Known Bugs
 
-- 部分Linux系统无法切换系统代理模式（本应用使用`gsetting`设置系统代理，所以有些Linux系统无法使用该功能），如果你知道如何实现，欢迎发issue告知。
-- Windows系统切换全局代理不生效
+- Some Linux system cannot switch system proxy mode. This application uses `gsetting` to set the system proxy, so some Linux systems cannot use this feature. If you know how to implement it, please feel free to create an issue.
+- Switching the global system proxy on Windows fails
 
-## 应用截图
+## Application screenshots
 
 ![](docs/assets/main.jpg)
 ![](docs/assets/settings.jpg)
@@ -70,52 +72,52 @@
 
 [FAQ](./docs/FAQ.md)
 
-## Issus
+## Issues
 
-请在发issue前先查看FAQ里的说明能不能解决你的问题。
-在发issue前请先在issue中搜索是否有同类issue，如果有请跟帖。
-另外发Bug类issue请详细描述你的使用环境，包括但不限于操作系统、软件版本，操作步骤，报错日志等。
+Before creating an issue please check whether the instructions in the FAQ can solve your problem.
+Please first check whether there exists a similar issue. If there is please follow up on that issue.
+Additionally if you find a bug please describe your environment in the issue. This includes operating system, software version, steps to reproduce, error logs etc.
 
-## 图标资源
+## Icon resources
 
 [https://www.figma.com/file/ghtehcxfzu0N2lQPoVEQXeU7/electron-ssr](https://www.figma.com/file/ghtehcxfzu0N2lQPoVEQXeU7/electron-ssr)
 
-欢迎提出改修意见
+Feel free to propose a new revision.
 
-## 打赏
+## Donate
 
 [![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/erguotou520)
 
-## 开发和构建
+## Build
 
 ``` bash
 # or npm install
 yarn
 
-# 开发时
+# run in development mode
 npm run dev
 
-# 打包构建
+# run in development mode
 npm run build
 
-# 单元测试
+# run the unit tests
 npm run mocha
 
-# 代码风格检查
+# run the code style check
 npm run lint
 
 ```
 
-## Changelog更新日志
+## Changelog
 
-请直接查看[release发布说明](https://github.com/erguotou520/electron-ssr/releases)
+Please check the [release notes](../../releases/latest).
 
-## ShadowsocksR 参考文档
+## ShadowsocksR reference documents
 
-- [ssr-libev](https://github.com/breakwa11/shadowsocksr-libev)
-- [ssr-libev 备份](https://github.com/shadowsocksr-backup/shadowsocksr-libev)
-- [SSR QRcode scheme](https://github.com/breakwa11/shadowsocks-rss/wiki/SSR-QRcode-scheme)
-- [SSR QRcode scheme备份](https://github.com/shadowsocksr-backup/shadowsocks-rss/wiki/SSR-QRcode-scheme)
+- [ssr-libev deleted](https://github.com/breakwa11/shadowsocksr-libev)
+- [ssr-libev backup](https://github.com/shadowsocksr-backup/shadowsocksr-libev)
+- [SSR QRcode scheme deleted](https://github.com/breakwa11/shadowsocks-rss/wiki/SSR-QRcode-scheme)
+- [SSR QRcode scheme backup](https://github.com/shadowsocksr-backup/shadowsocks-rss/wiki/SSR-QRcode-scheme)
 
 ---
 
