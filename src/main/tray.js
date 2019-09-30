@@ -1,10 +1,10 @@
-import { Menu, Tray, nativeImage } from 'electron'
+import { Menu, nativeImage, Tray } from 'electron'
 import { appConfig$ } from './data'
 import * as handler from './tray-handler'
 import { checkUpdate } from './updater'
 import { groupConfigs } from '../shared/utils'
-import { isMac, isWin, isOldMacVersion } from '../shared/env'
-import { disabledTray, enabledTray, enabledHighlightTray, pacTray, pacHighlightTray, globalTray, globalHighlightTray } from '../shared/icon'
+import { isMac, isOldMacVersion, isWin } from '../shared/env'
+import { disabledTray, enabledHighlightTray, enabledTray, globalHighlightTray, globalTray, pacHighlightTray, pacTray } from '../shared/icon'
 
 let tray
 
@@ -55,7 +55,10 @@ function generateConfigSubmenus (configs, selectedIndex) {
 function generateMenus (appConfig) {
   const base = [
     { label: '主界面', click: handler.showManagePanel },
-    { label: '开启应用', type: 'checkbox', checked: appConfig.enable, click: handler.toggleEnable },
+    { label: '开启应用', type: 'checkbox', checked: appConfig.enable, click: () => {
+      handler.toggleEnable()
+      handler.toggleProxy(appConfig.sysProxyMode)
+    } },
     { label: 'PAC', submenu: [
       { label: '更新PAC', click: handler.updatePac }
     ] },
