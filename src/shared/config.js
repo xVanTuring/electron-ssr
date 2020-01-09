@@ -1,4 +1,5 @@
-import { isLinux, isMac } from './env'
+import { isLinux } from './env'
+
 const defaultConfig = {
   // 配置集合
   configs: [],
@@ -36,7 +37,7 @@ const defaultConfig = {
   // 窗口快捷键
   windowShortcuts: {
     toggleMenu: {
-      key: isLinux ? `${isMac ? 'Command' : 'Ctrl'}+Shift+B` : '',
+      key: isLinux ? 'Ctrl+Shift+B' : '',
       enable: isLinux
     }
   },
