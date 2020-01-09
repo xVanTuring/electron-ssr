@@ -4,6 +4,13 @@
 
 `ShadowsocksR` is a cross-platform desktop client with support for Windows, MacOS and Linux. It is feature-rich, supports most of the features of the Windows version and has more user-friendly features. It is open source, is based on open source projects and gives back to the open source community.
 
+## Note for Linux user
+
+By defualt the `libsodium` maybe not install on some platform, example the `Fedora` , you can install manual it by `dnf install libsodium` .
+
+On some system that use `Gnome` desktop, except `Ubuntu 18.04`, maybe not install the `AppIndicator`, you can manual install this [plugin](https://extensions.gnome.org/extension/615/appindicator-support/) to solution it. (or find it in the store's Add-ons-Shell Extensions)
+
+
 ## Features
 
 - Support for manual configuration
