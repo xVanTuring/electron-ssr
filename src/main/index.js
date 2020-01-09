@@ -29,6 +29,9 @@ if (!isPrimaryInstance) {
       if (_window.isMinimized()) {
         _window.restore()
       }
+      if (!_window.isVisible()) {
+        showWindow()
+      }
       _window.focus()
     }
     // 如果是通过链接打开的应用，则添加记录
