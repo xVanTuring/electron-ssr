@@ -57,7 +57,7 @@ function release () {
       appId: 'me.erguotou.ssr',
       artifactName: '${productName}.${ext}',
       compression: 'normal',
-      copyright: 'erguotou525@gmail.com & xVanTuring@outlook.com',
+      copyright: 'The Electron-SSR Authors',
       files,
       extraFiles: extraFiles,
       directories: {
