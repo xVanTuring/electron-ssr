@@ -9,7 +9,6 @@ import { importConfigFromClipboard } from './tray-handler'
 import defaultConfig, { mergeConfig } from '../shared/config'
 import { showNotification } from './notification'
 import { sendData } from './window'
-import { toggleMenu } from './menu'
 import logger from './logger'
 
 /**
@@ -53,9 +52,6 @@ ipcMain.on(events.EVENT_APP_HIDE_WINDOW, () => {
 }).on(events.EVENT_APP_NOTIFY_RENDERER, (_, body, title) => {
   // 显示来自renderer进程的通知
   showNotification(body, title)
-}).on(events.EVENT_APP_TOGGLE_MENU, () => {
-  // 切换menu显示
-  toggleMenu()
 }).on(events.EVENT_APP_OPEN_DIALOG, async (e, params) => {
   const ret = await dialog.showOpenDialog(params)
   e.returnValue = ret.filePaths

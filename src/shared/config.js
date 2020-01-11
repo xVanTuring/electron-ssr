@@ -1,4 +1,3 @@
-import { isLinux } from './env'
 
 const defaultConfig = {
   // 配置集合
@@ -23,24 +22,6 @@ const defaultConfig = {
   serverSubscribes: [],
   // 是否开启http proxy
   httpProxyEnable: true,
-  // 全局快捷键
-  globalShortcuts: {
-    toggleWindow: {
-      key: isLinux ? 'Ctrl+Shift+W' : '',
-      enable: isLinux
-    },
-    switchSystemProxy: {
-      key: '',
-      enable: false
-    }
-  },
-  // 窗口快捷键
-  windowShortcuts: {
-    toggleMenu: {
-      key: isLinux ? 'Ctrl+Shift+B' : '',
-      enable: isLinux
-    }
-  },
   // http proxy端口
   httpProxyPort: 12333,
   // 是否自动更新订阅服务器

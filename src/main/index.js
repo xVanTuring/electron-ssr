@@ -13,7 +13,6 @@ import { setProxyToNone } from './proxy'
 import { createWindow, showWindow, getWindow, destroyWindow } from './window'
 import { startTask, stopTask } from './subscribe'
 import logger from './logger'
-import { clearShortcuts } from './shortcut'
 import { loadConfigsFromString } from '../shared/ssr'
 import { isMac, isWin } from '../shared/env'
 const isPrimaryInstance = app.requestSingleInstanceLock()
@@ -118,7 +117,6 @@ if (!isPrimaryInstance) {
     destroyWindow()
     stopHttpProxyServer()
     stopPacServer()
-    clearShortcuts()
     stopCommand(true).then(() => {
       app.exit(0)
     })
