@@ -4,6 +4,11 @@
 
 这是一个跨平台（支持Windows MacOS Linux系统）的`ShadowsocksR`客户端桌面应用，它功能丰富，支持windows版大部分功能，更有更多人性化功能。它是开源的，它来源于开源，回馈以开源。
 
+## Linux 用户注意
+在`Fedora`等平台可能未默认安装 `libsodium`, 可手动安装: `dnf install libsodium`
+
+在`Ubuntu 18.04`系统等系统之外的`Gnome`桌面, 默认未安装 `AppIndicator`，可安装[此插件](https://extensions.gnome.org/extension/615/appindicator-support/)解决(可在商店 Add-ons-Shell Extensions查找安装)
+
 ## 功能特色
 
 - 支持手动添加配置
