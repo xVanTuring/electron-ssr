@@ -46,8 +46,8 @@ install:
 script:
 #- xvfb-maybe node_modules/.bin/karma start test/unit/karma.conf.js
 - yarn run build
-branches:
-  only:
-  - master
+# branches:
+#   only:
+#   - master
 
 # if: tag IS present
