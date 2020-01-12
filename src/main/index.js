@@ -23,13 +23,7 @@ if (!isPrimaryInstance) {
   app.exit()
 } else {
   app.on('second-instance', (event, argv) => {
-    const _window = getWindow()
-    if (_window) {
-      if (_window.isMinimized()) {
-        _window.restore()
-      }
-      _window.focus()
-    }
+    showWindow()
     // 如果是通过链接打开的应用，则添加记录
     if (argv[1]) {
       const configs = loadConfigsFromString(argv[1])
