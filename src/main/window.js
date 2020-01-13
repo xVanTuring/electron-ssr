@@ -1,17 +1,17 @@
 import { app, BrowserWindow } from 'electron'
 import { isQuiting } from './data'
 import logger from './logger'
-
-const winURL = process.env.NODE_ENV === 'development'
-  ? `http://localhost:9080`
-  : `file://${__dirname}/index.html`
+import {
+  createProtocol,
+  // installVueDevtools
+} from 'vue-cli-plugin-electron-builder/lib'
 
 let mainWindow
 let readyPromise
 /**
  * 创建主视图
  */
-export function createWindow () {
+export function createWindow() {
   if (process.platform === 'darwin') {
     app.dock.hide()
   }
@@ -22,11 +22,20 @@ export function createWindow () {
     resizable: false,
     minimizable: false,
     maximizable: false,
-    show: false,
-    webPreferences: { webSecurity: process.env.NODE_ENV !== 'development', nodeIntegration: true }
+    show: true,
+    webPreferences: { webSecurity: process.env.NODE_ENV === 'production', nodeIntegration: true }
   })
+  // process.env.NODE_ENV !== 'development'
   mainWindow.setMenu(null)
-  mainWindow.loadURL(winURL)
+  if (process.env.WEBPACK_DEV_SERVER_URL) {
+    // Load the url of the dev server if in development mode
+    mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
+    if (!process.env.IS_TEST) mainWindow.webContents.openDevTools()
+  } else {
+    createProtocol('app')
+    // Load the index.html when not in development
+    mainWindow.loadURL(`file://${__dirname}/index.html`)
+  }
   // hide to tray when window closed
   mainWindow.on('close', (e) => {
     // 当前不是退出APP的时候才去隐藏窗口
@@ -48,14 +57,14 @@ export function createWindow () {
 /**
  * 返回主视图
  */
-export function getWindow () {
+export function getWindow() {
   return mainWindow
 }
 
 /**
  * 显示主视图
  */
-export function showWindow () {
+export function showWindow() {
   if (mainWindow) {
     mainWindow.show()
   }
@@ -64,7 +73,7 @@ export function showWindow () {
 /**
  * 隐藏主视图
  */
-export function hideWindow () {
+export function hideWindow() {
   isQuiting(false)
   if (mainWindow) {
     mainWindow.hide()
@@ -74,7 +83,7 @@ export function hideWindow () {
 /**
  * 切换窗体显隐
  */
-export function toggleWindow () {
+export function toggleWindow() {
   if (mainWindow) {
     if (mainWindow.isVisible()) {
       mainWindow.hide()
@@ -87,7 +96,7 @@ export function toggleWindow () {
 /**
  * 销毁主视图
  */
-export function destroyWindow () {
+export function destroyWindow() {
   if (mainWindow) {
     mainWindow.destroy()
     mainWindow = null
@@ -97,7 +106,7 @@ export function destroyWindow () {
 /**
  * 向主窗口发送消息
  */
-export async function sendData (channel, ...args) {
+export async function sendData(channel, ...args) {
   if (mainWindow) {
     await readyPromise
     mainWindow.webContents.send(channel, ...args)
@@ -109,7 +118,7 @@ export async function sendData (channel, ...args) {
 /**
  * 打开开发者工具
  */
-export async function openDevtool () {
+export async function openDevtool() {
   if (mainWindow) {
     await readyPromise
     mainWindow.webContents.openDevTools()

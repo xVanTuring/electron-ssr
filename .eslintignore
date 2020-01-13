@@ -3,3 +3,4 @@ src/renderer/qrcode/**
 test/unit/coverage/**
 test/unit/*.js
 test/e2e/*.js
+**/**

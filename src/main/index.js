@@ -16,14 +16,18 @@ import logger from './logger'
 import { clearShortcuts } from './shortcut'
 import { loadConfigsFromString } from '../shared/ssr'
 import { isMac, isWin } from '../shared/env'
+import {
+  installVueDevtools
+} from 'vue-cli-plugin-electron-builder/lib'
 const isPrimaryInstance = app.requestSingleInstanceLock()
-
+const isDevelopment = process.env.NODE_ENV !== 'production'
 if (!isPrimaryInstance) {
-  // cannot find module '../dialog'
-  // https://github.com/electron/electron/issues/8862#issuecomment-294303518
   app.exit()
 } else {
   app.on('second-instance', (event, argv) => {
+    if (isDevelopment && !process.env.IS_TEST) {
+      installVueDevtools();
+    }
     showWindow()
     // 如果是通过链接打开的应用，则添加记录
     if (argv[1]) {

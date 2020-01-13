@@ -45,9 +45,10 @@ install:
 - yarn
 script:
 #- xvfb-maybe node_modules/.bin/karma start test/unit/karma.conf.js
-- yarn run build
+- yarn run electron:build
 branches:
   only:
   - master
+  - structure-update
 
 # if: tag IS present

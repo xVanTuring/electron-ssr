@@ -123,10 +123,10 @@ export function configMerge (to, from, appendArray = false) {
 export function getUpdatedKeys (appConfig = {}, targetConfig) {
   return Object.keys(targetConfig).filter(key => {
     // 如果原对象类型和新的类型不一致直接返回true
+    const value = targetConfig[key]
     if (protoString(appConfig[key]) !== protoString(value)) {
       return true
     }
-    const value = targetConfig[key]
     switch (protoString(value)) {
       case OBJECT_PROTOTYPE:
         return getUpdatedKeys(appConfig[key], value).length
