@@ -57,7 +57,7 @@ function release () {
       appId: 'me.erguotou.ssr',
       artifactName: '${productName}.${ext}',
       compression: 'normal',
-      copyright: 'erguotou525@gmail.com & xVanTuring@outlook.com',
+      copyright: 'The Electron-SSR Authors',
       files,
       extraFiles: extraFiles,
       directories: {
@@ -112,11 +112,11 @@ function release () {
         category: 'Development',
         synopsis: pkg.description,
         target: [
-          //'deb',
+          'deb',
           'rpm',
-          //'tar.gz',
-          //'pacman',
-          //'appImage'
+          'tar.gz',
+          'pacman',
+          'appImage'
         ],
         desktop: {
           Name: 'electron-ssr',

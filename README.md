@@ -6,9 +6,9 @@
 
 ## Note for Linux user
 
-By defualt the `libsodium` maybe not install on some platform, example the `Fedora` , you can install manual it by `dnf install libsodium` .
+By default the `libsodium` maybe not get installed on some platform, for example, the `Fedora`, you can install it manually by command `dnf install libsodium`.
 
-On some system that use `Gnome` desktop, except `Ubuntu 18.04`, maybe not install the `AppIndicator`, you can manual install this [plugin](https://extensions.gnome.org/extension/615/appindicator-support/) to solution it. (or find it in the store's Add-ons-Shell Extensions)
+On some systems that use `Gnome` desktop, except `Ubuntu 18.04`, may not have the `AppIndicator` installed, you can manually install this [plugin](https://extensions.gnome.org/extension/615/appindicator-support/) to fix it. (or find it in the store's Add-ons-Shell Extensions)
 
 
 ## Features
