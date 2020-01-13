@@ -4,9 +4,6 @@ const platform = os.platform()
 const extraFiles = []
 let files = [
     '**/*',
-    '!imgs/*.svg',
-    '!fonts/*.eot',
-    '!fonts/*.ttf',
 ]
 const macImages = [
     '!static/enabled@(Template|Highlight)?(@2x).png',
@@ -95,6 +92,16 @@ module.exports = {
             .clear()
             .add("./src/renderer/main.js")
             .end()
-
+        const FILE_RE = /\.(vue|js|ts|svg)$/
+        config.module.rule('svg').issuer(file => !FILE_RE.test(file))
+        config.module
+            .rule('svg-component')
+            .test(/\.svg$/)
+            .issuer(file => FILE_RE.test(file))
+            .use('vue')
+            .loader('vue-loader')
+            .end()
+            .use('svg-to-vue-component')
+            .loader('svg-to-vue-component/loader')
     }
 }
