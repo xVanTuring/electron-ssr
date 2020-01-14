@@ -25,9 +25,6 @@ if (!isPrimaryInstance) {
   app.exit()
 } else {
   app.on('second-instance', (event, argv) => {
-    if (isDevelopment && !process.env.IS_TEST) {
-      installVueDevtools()
-    }
     showWindow()
     // 如果是通过链接打开的应用，则添加记录
     if (argv[1]) {
@@ -38,7 +35,10 @@ if (!isPrimaryInstance) {
     }
   })
 
-  bootstrap.then(() => {
+  bootstrap.then(async () => {
+    if (isDevelopment && !process.env.IS_TEST) {
+      await installVueDevtools()
+    }
     createWindow()
     if (isWin || isMac) {
       app.setAsDefaultProtocolClient('ssr')
