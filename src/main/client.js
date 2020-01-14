@@ -13,7 +13,7 @@ let child
  * 运行shell命令并写入到日志中
  * @param {*String} command 待执行的shell命令
  */
-export function runCommand(command, params) {
+export function runCommand (command, params) {
   if (command && params.length) {
     const commandStr = `${command} ${params.join(' ')}`
     logger.info('run command: %s', commandStr.replace(/-k [\d\w]* /, '-k ****** '))
@@ -29,7 +29,7 @@ export function runCommand(command, params) {
  * @param {*String} ssrPath local.py的路径
  * @param {*[Number|String]} localPort 本地共享端口
  */
-export async function run(appConfig) {
+export async function run (appConfig) {
   const listenHost = appConfig.shareOverLan ? '0.0.0.0' : '127.0.0.1'
   // 先结束之前的
   await stop()
@@ -78,7 +78,7 @@ export async function run(appConfig) {
 /**
  * 结束command的后台运行
  */
-export function stop(force = false) {
+export function stop (force = false) {
   if (child && child.pid) {
     logger.log('Kill client')
     return new Promise((resolve, reject) => {
@@ -117,7 +117,7 @@ export function stop(force = false) {
  * 根据配置运行SSR命令
  * @param {Object} appConfig 应用配置
  */
-export function runWithConfig(appConfig) {
+export function runWithConfig (appConfig) {
   if (appConfig.ssrPath && appConfig.enable && appConfig.configs && appConfig.configs[appConfig.index]) {
     run(appConfig)
   }
