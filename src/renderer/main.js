@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import './components'
-import './ipc'
+import { getInitConfig } from './ipc'
 import store from './store'
 import App from './App'
-import { getInitConfig } from './ipc'
 import { init as initShortcut } from './shortcut'
+require('./ipc')
 
 Vue.config.productionTip = false
 

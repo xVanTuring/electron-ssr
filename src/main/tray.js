@@ -55,16 +55,21 @@ function generateConfigSubmenus (configs, selectedIndex) {
 function generateMenus (appConfig) {
   const base = [
     { label: '主界面', click: handler.showManagePanel },
-    { label: '开启应用', type: 'checkbox', checked: appConfig.enable, click: () => {
+    { label: '开启应用',
+type: 'checkbox',
+checked: appConfig.enable,
+click: () => {
       handler.toggleEnable()
       handler.toggleProxy(appConfig.sysProxyMode)
     } },
-    { label: 'PAC', submenu: [
+    { label: 'PAC',
+submenu: [
       { label: '更新PAC', click: handler.updatePac }
     ] },
     { label: '服务器', submenu: generateConfigSubmenus(appConfig.configs, appConfig.index) },
     { label: '二维码扫描', click: handler.scanQRCode },
-    { label: '配置', submenu: [
+    { label: '配置',
+submenu: [
       { label: '选项设置...', click: handler.showOptions },
       { label: '导入gui-config.json文件', click: handler.importConfigFromFile },
       { label: '导出gui-config.json文件', click: handler.exportConfigToFile },
@@ -72,7 +77,8 @@ function generateMenus (appConfig) {
       { label: '打开配置文件', click: handler.openConfigFile }
     ] },
     { label: '复制http代理设置', click: handler.copyHttpProxyCode },
-    { label: '帮助', submenu: [
+    { label: '帮助',
+submenu: [
       { label: '检查更新', click: () => checkUpdate(true) },
       { label: '查看日志', click: handler.openLog },
       // { label: '项目主页', click: () => { handler.openURL('https://github.com/shadowsocksrr/electron-ssr') } },
@@ -84,7 +90,8 @@ function generateMenus (appConfig) {
   ]
   if (!isOldMacVersion) {
     base.splice(1, 0,
-      { label: '系统代理模式        ', submenu: [
+      { label: '系统代理模式        ',
+submenu: [
         { label: '不启用代理', type: 'checkbox', checked: appConfig.sysProxyMode === 0, click: e => changeProxy(e, 0, appConfig) },
         { label: 'PAC代理', type: 'checkbox', checked: appConfig.sysProxyMode === 1, click: e => changeProxy(e, 1, appConfig) },
         { label: '全局代理', type: 'checkbox', checked: appConfig.sysProxyMode === 2, click: e => changeProxy(e, 2, appConfig) }

@@ -19,6 +19,9 @@ module.exports = {
   // ],
   rules: {
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    // https://github.com/babel/babel-eslint/issues/681
+    "template-curly-spacing" : "off",
+    indent : "off"
   }
 }

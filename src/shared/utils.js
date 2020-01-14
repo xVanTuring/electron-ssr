@@ -251,7 +251,7 @@ export function somePromise (promiseArr) {
       p.then(resolve).catch(() => {
         count++
         if (count === promiseArr.length) {
-          reject()
+          reject(new Error('Error Occurred!'))
         }
       })
     }

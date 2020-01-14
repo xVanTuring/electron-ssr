@@ -26,7 +26,7 @@ if (!isPrimaryInstance) {
 } else {
   app.on('second-instance', (event, argv) => {
     if (isDevelopment && !process.env.IS_TEST) {
-      installVueDevtools();
+      installVueDevtools()
     }
     showWindow()
     // 如果是通过链接打开的应用，则添加记录

@@ -24,7 +24,7 @@ export function isHostPortValid (host, port) {
         })
         const timeout = setTimeout(() => {
           if (!closed) {
-            reject('Timeout when release port.')
+            reject(new Error('Timeout when release port.'))
           }
         }, 5000)
       })

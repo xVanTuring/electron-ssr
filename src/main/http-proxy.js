@@ -51,7 +51,7 @@ export async function stopHttpProxyServer () {
       server.shutdown(err => {
         if (err) {
           logger.warn(`close http proxy server error: ${err}`)
-          reject()
+          reject(new Error(`close http proxy server error: ${err}`))
         } else {
           logger.info('http proxy server closed.')
           resolve()
