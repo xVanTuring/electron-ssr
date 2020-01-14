@@ -6,7 +6,7 @@ import logger from './logger'
  * @param {String} host 要监听的地址
  * @param {Number|String} port 要监听的端口
  */
-export function isHostPortValid (host, port) {
+export function ensureHostPortValid (host, port) {
   return new Promise((resolve, reject) => {
     const tester = createServer().listen(port, host)
       .once('error', err => {
@@ -36,5 +36,5 @@ export function isHostPortValid (host, port) {
  * @param {Number|String} port 要判断的端口
  */
 export function isPortValid (port) {
-  return Promise.all([isHostPortValid('0.0.0.0', port), isHostPortValid('127.0.0.1', port)])
+  return Promise.all([ensureHostPortValid('0.0.0.0', port), ensureHostPortValid('127.0.0.1', port)])
 }

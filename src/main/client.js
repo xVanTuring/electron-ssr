@@ -3,7 +3,7 @@ import { execFile } from 'child_process'
 // import treeKill from 'tree-kill'
 import { dialog } from 'electron'
 import { appConfig$ } from './data'
-import { isHostPortValid } from './port'
+import { ensureHostPortValid } from './port'
 import logger from './logger'
 import { isConfigEqual } from '../shared/utils'
 import { showNotification } from './notification'
@@ -34,7 +34,7 @@ export async function run (appConfig) {
   // 先结束之前的
   await stop()
   try {
-    await isHostPortValid(listenHost, appConfig.localPort || 1080)
+    await ensureHostPortValid(listenHost, appConfig.localPort || 1080)
   } catch (e) {
     logger.error(e)
     dialog.showErrorBox(`端口 ${appConfig.localPort} 被占用`, '请检查你端口占用')
