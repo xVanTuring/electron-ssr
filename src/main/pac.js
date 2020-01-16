@@ -75,6 +75,7 @@ export async function serverPac (appConfig, isProxyStarted) {
           pacServer.shutdown()
         })
     } catch (err) {
+      logger.error('PAC Server Port Check failed, with error: ')
       logger.error(err)
       dialog.showMessageBox({
         type: 'warning',

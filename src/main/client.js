@@ -35,44 +35,45 @@ export async function run (appConfig) {
   await stop()
   try {
     await ensureHostPortValid(listenHost, appConfig.localPort || 1080)
+    const config = appConfig.configs[appConfig.index]
+    // 参数
+    const params = [path.join(appConfig.ssrPath, 'local.py')]
+    params.push('-s')
+    params.push(config.server)
+    params.push('-p')
+    params.push(config.server_port)
+    params.push('-k')
+    params.push(config.password)
+    params.push('-m')
+    params.push(config.method)
+    params.push('-O')
+    params.push(config.protocol)
+    if (config.protocolparam) {
+      params.push('-G')
+      params.push(config.protocolparam)
+    }
+    if (config.obfs) {
+      params.push('-o')
+      params.push(config.obfs)
+    }
+    if (config.obfsparam) {
+      params.push('-g')
+      params.push(config.obfsparam)
+    }
+    params.push('-b')
+    params.push(listenHost)
+    params.push('-l')
+    params.push(appConfig.localPort || 1080)
+    if (config.timeout) {
+      params.push('-t')
+      params.push(config.timeout)
+    }
+    runCommand('python', params)
   } catch (e) {
+    logger.error('SSR Client Port Check failed, with error: ')
     logger.error(e)
     dialog.showErrorBox(`端口 ${appConfig.localPort} 被占用`, '请检查你端口占用')
   }
-  const config = appConfig.configs[appConfig.index]
-  // 参数
-  const params = [path.join(appConfig.ssrPath, 'local.py')]
-  params.push('-s')
-  params.push(config.server)
-  params.push('-p')
-  params.push(config.server_port)
-  params.push('-k')
-  params.push(config.password)
-  params.push('-m')
-  params.push(config.method)
-  params.push('-O')
-  params.push(config.protocol)
-  if (config.protocolparam) {
-    params.push('-G')
-    params.push(config.protocolparam)
-  }
-  if (config.obfs) {
-    params.push('-o')
-    params.push(config.obfs)
-  }
-  if (config.obfsparam) {
-    params.push('-g')
-    params.push(config.obfsparam)
-  }
-  params.push('-b')
-  params.push(listenHost)
-  params.push('-l')
-  params.push(appConfig.localPort || 1080)
-  if (config.timeout) {
-    params.push('-t')
-    params.push(config.timeout)
-  }
-  runCommand('python', params)
 }
 
 /**
