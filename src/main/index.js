@@ -20,7 +20,7 @@ import {
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
 const isPrimaryInstance = app.requestSingleInstanceLock()
-const isDevelopment = process.env.NODE_ENV !== 'production'
+const isDevelopment = process.env.NODE_ENV !== 'production' && !process.env.IS_TEST
 if (!isPrimaryInstance) {
   app.exit()
 } else {
@@ -36,8 +36,9 @@ if (!isPrimaryInstance) {
   })
 
   bootstrap.then(async () => {
-    if (isDevelopment && !process.env.IS_TEST) {
-      await installVueDevtools()
+    if (isDevelopment) {
+      console.log('Ensure Vue Devtools has been installed')
+      installVueDevtools()
     }
     createWindow()
     if (isWin || isMac) {
