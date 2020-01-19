@@ -1,8 +1,9 @@
 module.exports = {
   root: true,
-  parserOptions: {
-    "parser": "babel-eslint"
-  },
+  // https://github.com/babel/babel-eslint/issues/530#issuecomment-385774262
+  // parserOptions: {
+  //   "parser": "babel-eslint"
+  // },
   env: {
     browser: true,
     node: true
@@ -20,8 +21,5 @@ module.exports = {
   rules: {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-    // https://github.com/babel/babel-eslint/issues/681
-    "template-curly-spacing" : "off",
-    indent : "off"
   }
 }
