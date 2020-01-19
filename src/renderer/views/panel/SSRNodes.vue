@@ -1,6 +1,6 @@
 <template>
   <div class="panel-nodes flex flex-column h-100">
-    <div class="node-group">
+    <div class="node-group" ref="nodeGroup">
       <node-group v-for="group in groupedNodes"
                   :activatedConfigId="activatedConfigId"
                   :selectedConfigId="selectedConfigId"
@@ -121,6 +121,13 @@ export default {
     //   preventIndexAffect = true
     //   this.updateConfigs(this.flatNodeGroups(clone))
     // }
+  },
+  mounted () {
+    // Auto scroll to selected(activated) node.
+    const selectedNode = this.$refs.nodeGroup.querySelector('.node-root.selected')
+    if (selectedNode) {
+      this.$refs.nodeGroup.scrollTop = selectedNode.offsetTop - 200
+    }
   }
 }
 </script>
