@@ -15,7 +15,7 @@ export function createWindow () {
     app.dock.hide()
   }
   mainWindow = new BrowserWindow({
-    height: 440,
+    height: 480,
     width: 800,
     center: true,
     resizable: false,

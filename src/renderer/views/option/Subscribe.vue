@@ -49,71 +49,71 @@ export default {
         { title: '订阅地址',
           key: 'URL',
           render: (h, params) => {
-                    const self = this
-                    const isEditing = params.index === this.editingRowIndex
-                    let element
-                    if (isEditing) {
-                      element = h('i-input', {
-                        ref: 'url',
-                        props: {
-                          value: this.editingRowUrl,
-                          placeholder: '请输入新的订阅服务器的URL'
-                        },
-                        attrs: {
-                          id: 'editing-input'
-                        },
-                        on: {
-                          'on-blur' () {
-                            self.cancelEditing()
-                          }
-                        },
-                        nativeOn: {
-                          keyup (e) {
-                            if (e.keyCode === 13) {
-                              const url = self.editingRowUrl
-                              // 未发生改变
-                              if (url === self.appConfig.serverSubscribes[params.index].URL) {
-                                self.cancelEditing()
-                                return
-                              }
-                              self.loading = true
-                              if (URL_REGEX.test(url)) {
-                                self.requestSubscribeUrl(url).then(res => {
-                                  self.loading = false
-                                  const [groupCount, groupConfigs] = isSubscribeContentValid(res)
-                                  if (groupCount > 0) {
-                                    const clone = self.appConfig.serverSubscribes.slice()
-                                    clone.splice(params.index, 1)
-                                    let groups = ''
-                                    let configs = []
-                                    for (const groupName in groupConfigs) {
-                                      groups = groups + groupName + '|'
-                                      configs = configs.concat(groupConfigs[groupName])
-                                    }
-                                    clone.splice(params.index, 0, { URL: url, Group: groups.slice(0, -1) })
-                                    self.updateConfig({
-                                      serverSubscribes: clone,
-                                      configs: self.appConfig.configs.concat(configs)
-                                    })
-                                  }
-                                }).catch(() => {
-                                  self.loading = false
-                                })
-                                self.cancelEditing()
-                              } else {
-                                self.editingUrlError = true
-                              }
-                            } else if (e.keyCode === 27) {
-                              self.cancelEditing()
-                            }
-                          }
-                        }
-                      })
-                    } else {
-                      element = params.row.URL
-                    }
-                    return h('div', [element])
+            const self = this
+            const isEditing = params.index === this.editingRowIndex
+            let element
+            if (isEditing) {
+              element = h('i-input', {
+                ref: 'url',
+                props: {
+                  value: this.editingRowUrl,
+                  placeholder: '请输入新的订阅服务器的URL'
+                },
+                attrs: {
+                  id: 'editing-input'
+                },
+                on: {
+                  'on-blur' () {
+                    self.cancelEditing()
                   }
+                },
+                nativeOn: {
+                  keyup (e) {
+                    if (e.keyCode === 13) {
+                      const url = self.editingRowUrl
+                      // 未发生改变
+                      if (url === self.appConfig.serverSubscribes[params.index].URL) {
+                        self.cancelEditing()
+                        return
+                      }
+                      self.loading = true
+                      if (URL_REGEX.test(url)) {
+                        self.requestSubscribeUrl(url).then(res => {
+                          self.loading = false
+                          const [groupCount, groupConfigs] = isSubscribeContentValid(res)
+                          if (groupCount > 0) {
+                            const clone = self.appConfig.serverSubscribes.slice()
+                            clone.splice(params.index, 1)
+                            let groups = ''
+                            let configs = []
+                            for (const groupName in groupConfigs) {
+                              groups = groups + groupName + '|'
+                              configs = configs.concat(groupConfigs[groupName])
+                            }
+                            clone.splice(params.index, 0, { URL: url, Group: groups.slice(0, -1) })
+                            self.updateConfig({
+                              serverSubscribes: clone,
+                              configs: self.appConfig.configs.concat(configs)
+                            })
+                          }
+                        }).catch(() => {
+                          self.loading = false
+                        })
+                        self.cancelEditing()
+                      } else {
+                        self.editingUrlError = true
+                      }
+                    } else if (e.keyCode === 27) {
+                      self.cancelEditing()
+                    }
+                  }
+                }
+              })
+            } else {
+              element = params.row.URL
+            }
+            return h('div', [element])
+          }
         },
         { title: '组名', key: 'Group', width: 320 }
       ],

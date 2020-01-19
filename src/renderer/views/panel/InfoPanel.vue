@@ -1,0 +1,80 @@
+<template>
+  <div class="info-panel">
+    <ssr-form v-show="!displaySSR&&!editingGroup.show" class="flex-1 mx-1"/>
+    <ssr-group v-show="inGroupNode" class="flex-1 ml-1"/>
+    <ssr-qrcode v-show="displaySSR&&!inGroupNode"/>
+    <div class="control-panel">
+      <i-button class="w-6r" type="error" @click="removeClick">删除</i-button>
+      <i-button class="w-6r ml-3" type="primary" @click="save">保存</i-button>
+      <i-checkbox class="ml-3" v-model="displaySSR">显示二维码</i-checkbox>
+    </div>
+  </div>
+</template>
+
+<script>
+import SsrForm from './SSRForm'
+import SsrGroup from './SSRGroup'
+import SsrQrcode from './SSRQrcode'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+// import { clone } from '@/shared/utils'
+import { isValidSSRConfig } from '@/shared/ssr'
+
+export default {
+  components: {
+    SsrForm,
+    SsrGroup,
+    SsrQrcode
+  },
+  data () {
+    return {
+      displaySSR: false
+    }
+  },
+  computed: {
+    ...mapState(['editingGroup', 'editingConfig', 'appConfig']),
+    ...mapGetters(['isEditingConfigUpdated', 'configs']),
+    inGroupNode () {
+      return this.editingGroup && this.editingGroup.show && this.editingGroup.title
+    }
+  },
+  methods: {
+    ...mapMutations(['resetState', 'updateEditingBak', 'setCurrentConfig', 'updateEditingGroup']),
+    ...mapActions(['updateConfigs', 'removeEditingNode', 'renameEditingGroup', 'removeGroup', 'saveEditingNode']),
+    save () {
+      if (this.inGroupNode) {
+        this.renameEditingGroup()
+      } else {
+        if (isValidSSRConfig(this.editingConfig)) {
+          this.saveEditingNode()
+        } else {
+          window.alert('服务器配置信息不完整')
+        }
+      }
+    },
+    removeClick () {
+      if (!this.inGroupNode) {
+        this.removeEditingNode()
+      } else {
+        this.removeGroup()
+      }
+    }
+  }
+}
+</script>
+
+<style scoped>
+  .info-panel {
+    width: 50%;
+    height: 100%;
+    position: relative;
+  }
+
+  .control-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+  }
+</style>
