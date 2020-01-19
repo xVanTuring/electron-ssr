@@ -19,7 +19,17 @@ export function runCommand (command, params) {
     logger.info('run command: %s', commandStr.replace(/-k [\d\w]* /, '-k ****** '))
     child = execFile(command, params)
     child.stdout.on('data', logger.info)
-    child.stderr.on('data', logger.error)
+    child.stderr.on('data', (error) => {
+      error.split('\n').forEach(msg => {
+        if (msg.indexOf('INFO') >= 0) {
+          logger.info(msg)
+        } else if (msg.indexOf('ERROR') >= 0) {
+          logger.error(msg)
+        } else if (msg.indexOf('WARNING') >= 0) {
+          logger.warn(msg)
+        }
+      })
+    })
   }
 }
 
