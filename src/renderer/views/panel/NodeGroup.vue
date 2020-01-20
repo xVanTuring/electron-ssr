@@ -1,9 +1,11 @@
 <template>
   <div class="ssr-node-group">
-     <div class="node-group-node" :class="{selected:selectedGroupName===node.title}" @click="groupClick" @dblclick="handleToggleClick">
+     <div class="node-group-node"
+      :class="{selected:selectedGroupName===node.title}"
+      @click="groupClick" @dblclick="handleToggleClick">
         <span class="group-expand-icon" :class="{expanded:expanded}" @click.stop="handleToggleClick"/>
         <div class="group-selection-background">
-            <span class="node-group-title" >{{node.title}}</span>
+            <span class="node-group-title" >{{groupName}}</span>
         </div>
      </div>
      <div class="group-children-area" v-show="expanded">
@@ -34,6 +36,11 @@ export default {
   data () {
     return {
       expanded: true
+    }
+  },
+  computed: {
+    groupName () {
+      return this.node.title === '$ungrouped$' ? '未分组' : this.node.title
     }
   },
   methods: {

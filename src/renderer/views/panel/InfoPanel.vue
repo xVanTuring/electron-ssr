@@ -15,7 +15,7 @@
 import SsrForm from './SSRForm'
 import SsrGroup from './SSRGroup'
 import SsrQrcode from './SSRQrcode'
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 // import { clone } from '@/shared/utils'
 import { isValidSSRConfig } from '@/shared/ssr'
 
@@ -31,15 +31,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(['editingGroup', 'editingConfig', 'appConfig']),
+    ...mapState(['editingGroup', 'appConfig', 'editingConfig']),
     ...mapGetters(['isEditingConfigUpdated', 'configs']),
     inGroupNode () {
       return this.editingGroup && this.editingGroup.show && this.editingGroup.title
     }
   },
   methods: {
-    ...mapMutations(['resetState', 'updateEditingBak', 'setCurrentConfig', 'updateEditingGroup']),
-    ...mapActions(['updateConfigs', 'removeEditingNode', 'renameEditingGroup', 'removeGroup', 'saveEditingNode']),
+    ...mapActions(['removeEditingNode', 'renameEditingGroup', 'removeEditingGroup', 'saveEditingNode']),
     save () {
       if (this.inGroupNode) {
         this.renameEditingGroup()
@@ -55,7 +54,7 @@ export default {
       if (!this.inGroupNode) {
         this.removeEditingNode()
       } else {
-        this.removeGroup()
+        this.removeEditingGroup()
       }
     }
   }

@@ -125,7 +125,7 @@ export default new Vuex.Store({
     },
     editingConfig,
     // 备份当前选中的配置项
-    editingConfigBak: defaultSSRConfig(),
+    editingConfigBak: {},
     editingGroup: { show: false, title: '', updated: false, editingTitle: '' },
     selection: {
       selectedConfigId: ''
@@ -168,7 +168,7 @@ export default new Vuex.Store({
       state.view.page = views[views.indexOf(state.view.page) + 1]
     },
     // 设置选中的配置
-    setCurrentConfig (state, ssrConfig) {
+    setEditingConfig (state, ssrConfig) {
       merge(state.editingConfig, ssrConfig)
       merge(state.editingConfigBak, ssrConfig)
     },
@@ -222,7 +222,7 @@ export default new Vuex.Store({
       }
       const initialSelected = config.configs[config.index]
       if (initialSelected) {
-        commit('setCurrentConfig', initialSelected)
+        commit('setEditingConfig', initialSelected)
       }
       if (config.ssrPath) {
         commit('updateView', { page: views[2] })
@@ -318,13 +318,15 @@ export default new Vuex.Store({
     },
     renameEditingGroup (context) {
       if (context.state.editingGroup.editingTitle !== context.state.editingGroup.title) {
-        const clone = context.state.appConfig.configs.slice()
-        clone.forEach(config => {
-          if (config.group === context.state.editingGroup.title) {
-            config.group = context.state.editingGroup.editingTitle
+        const copy = context.state.appConfig.configs.slice()
+        let searchTitle = context.state.editingGroup.title === '$ungrouped$' ? '' : context.state.editingGroup.title
+        for (let index = 0; index < copy.length; index++) {
+          const config = copy[index]
+          if (config.group === searchTitle) {
+            copy.splice(index, 1, Object.assign({}, clone(config, true), { group: context.state.editingGroup.editingTitle }))
           }
-        })
-        context.dispatch('updateConfigs', clone)
+        }
+        context.dispatch('updateConfigs', copy)
         context.commit('updateEditingGroup', { updated: true, title: context.state.editingGroup.editingTitle })
       }
     },
@@ -334,13 +336,16 @@ export default new Vuex.Store({
         const index = copy.findIndex(
           config => config.id === context.state.editingConfig.id
         )
-        copy.splice(index, 1)
+        if (index >= 0) {
+          copy.splice(index, 1)
+        }
         copy.splice(index, 0, clone(context.state.editingConfig))
         context.commit('updateEditingBak')
         context.dispatch('updateConfigs', copy)
       }
     },
-    removeGroup (context, title) {
+    removeEditingGroup (context) {
+      const title = context.state.editingGroup.title
       const clone = context.state.appConfig.configs.slice()
       context.dispatch('updateConfigs', clone.filter(config => config.group !== title))
       context.commit('setSelectedConfigId', (context.state.selectedConfig && context.state.selectedConfig.id) || '')
@@ -356,7 +361,7 @@ export default new Vuex.Store({
     },
     setSelected (context, id) {
       context.commit('setSelectedConfigId', id)
-      context.commit('setCurrentConfig', context.getters.selectedConfigNode)
+      context.commit('setEditingConfig', context.getters.selectedConfigNode)
     },
     newSubscription (context) {
       context.commit('updateView', { page: 'Options', tab: 'subscribes', active: true })
@@ -364,7 +369,7 @@ export default new Vuex.Store({
   },
   getters: {
     activatedConfig: (state) => state.appConfig.configs[state.appConfig.index],
-    isEditingConfigUpdated: (state) => !isConfigEqual(state.editingConfigBak, state.editingConfig),
+    isEditingConfigUpdated: (state) => !isConfigEqual(state.editingConfig, state.editingConfigBak),
     configs: (state) => {
       if (state.appConfig && state.appConfig.configs && state.appConfig.configs.length) {
         return state.appConfig.configs.map(config => {
@@ -377,7 +382,7 @@ export default new Vuex.Store({
       if (state.selection.selectedConfigId) {
         return getters.configs.find(config => config.id === state.selection.selectedConfigId)
       }
-      return null
+      return defaultSSRConfig()
     }
   }
 })

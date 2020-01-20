@@ -32,7 +32,7 @@ export default {
   },
   computed: {
     ...mapState(['appConfig', 'editingGroup', 'selection']),
-    ...mapGetters(['activatedConfig', 'configs', 'selectedConfigNode']),
+    ...mapGetters(['activatedConfig', 'configs']),
     selectedGroupName () {
       return this.editingGroup.title
     },
@@ -70,7 +70,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['setCurrentConfig', 'updateEditingGroup',
+    ...mapMutations(['updateEditingGroup',
       'resetState', 'setSelectedConfigId', 'setSelectedGroupName']),
     ...mapActions(['updateConfigs', 'updateConfig', 'setSelected']),
 
@@ -78,7 +78,8 @@ export default {
       let { id, group, title } = data
       if (group) {
         this.setSelected('')
-        this.updateEditingGroup({ show: true, title: title === '未分组' ? '' : title })
+        // === '$ungrouped$' ? '$ungrouped$' : title
+        this.updateEditingGroup({ show: true, title: title })
       } else {
         this.setSelected(id)
         this.updateEditingGroup({ show: false })
