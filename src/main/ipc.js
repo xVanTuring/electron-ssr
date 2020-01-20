@@ -35,7 +35,7 @@ ipcMain.on(events.EVENT_APP_HIDE_WINDOW, () => {
   }
 }).on(events.EVENT_RX_SYNC_RENDERER, (_, data) => {
   // 同步数据
-  logger.debug(`received sync data: ${data}`)
+  logger.debug(`received sync data: ${JSON.stringify(data, undefined, 4)}`)
   updateAppConfig(data, true)
 }).on(events.EVENT_SSR_DOWNLOAD_RENDERER, e => {
   // 下载ssr
