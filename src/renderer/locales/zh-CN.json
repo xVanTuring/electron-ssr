@@ -1,0 +1,13 @@
+{
+  "SSR_SERVER_PATH": "服务器地址",
+  "SSR_SERVER_PORT": "服务器端口",
+  "SSR_PASSWORD": "密码",
+  "SSR_ENCRYPT_METHOD": "加密方式",
+  "SSR_PROTO": "协议",
+  "SSR_PROTO_PARAM": "协议参数",
+  "SSR_OBFS": "混淆",
+  "SSR_OBFS_PARAM": "混淆参数",
+  "SSR_NOTE": "备注",
+  "SSR_GROUP": "分组",
+  "SSR_GROUP_RENAME":"重命名分组"
+}

@@ -1,27 +1,22 @@
 {
   "name": "electron-ssr",
   "version": "3.0.0",
+  "description": "Cross platform ShadowsocksR GUI client built with electron",
   "author": {
     "name": "The Electron-SSR Authors",
     "email": "xVanTuring@outlook.com"
   },
-  "description": "Cross platform ShadowsocksR GUI client built with electron",
-  "homepage": "https://github.com/shadowsocksrr/electron-ssr/",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/shadowsocksrr/electron-ssr"
-  },
-  "main": "background.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
+    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
+  "main": "background.js",
   "dependencies": {
     "auto-launch": "^5.0.5",
     "core-js": "^3.4.4",
@@ -38,15 +33,18 @@
     "sudo-prompt": "^9.1.1",
     "urlsafe-base64": "^1.0.0",
     "vue": "^2.6.10",
+    "vue-i18n": "^8.15.3",
     "vuex": "^3.1.2"
   },
   "devDependencies": {
+    "@kazupon/vue-i18n-loader": "^0.3.0",
     "@vue/cli-plugin-babel": "^4.1.0",
     "@vue/cli-plugin-eslint": "^4.1.0",
     "@vue/cli-plugin-vuex": "^4.1.0",
     "@vue/cli-service": "^4.1.0",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.3",
+    "devtron": "^1.4.0",
     "electron": "^6.0.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
@@ -54,6 +52,13 @@
     "stylus-loader": "^3.0.2",
     "svg-to-vue-component": "^0.3.8",
     "vue-cli-plugin-electron-builder": "^1.4.4",
+    "vue-cli-plugin-i18n": "^0.6.1",
     "vue-template-compiler": "^2.6.10"
+  },
+  "homepage": "https://github.com/shadowsocksrr/electron-ssr/",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shadowsocksrr/electron-ssr"
   }
 }

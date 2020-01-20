@@ -86,6 +86,12 @@ module.exports = {
           }
         }
       }
+    },
+    i18n: {
+      locale: 'en-US',
+      fallbackLocale: 'en-US',
+      localeDir: 'renderer/locales',
+      enableInSFC: false
     }
   },
   chainWebpack: (config) => {

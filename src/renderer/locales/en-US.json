@@ -1,0 +1,13 @@
+{
+  "SSR_SERVER_PATH": "Server Path",
+  "SSR_SERVER_PORT": "Server Port",
+  "SSR_PASSWORD": "Password",
+  "SSR_ENCRYPT_METHOD": "Method",
+  "SSR_PROTO": "Protocol",
+  "SSR_PROTO_PARAM": "Protocol Param",
+  "SSR_OBFS": "OBFS",
+  "SSR_OBFS_PARAM": "OBFS Param",
+  "SSR_NOTE": "Note",
+  "SSR_GROUP": "Group",
+  "SSR_GROUP_RENAME":"Rename Group"
+}
