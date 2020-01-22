@@ -19,7 +19,7 @@ function loadLocaleMessages () {
 // process.env.VUE_APP_I18N_LOCALE ||
 // process.env.VUE_APP_I18N_FALLBACK_LOCALE ||
 export default new VueI18n({
-  locale: 'zh-CN',
+  locale: 'en-US',
   fallbackLocale: 'en-US',
   messages: loadLocaleMessages()
 })

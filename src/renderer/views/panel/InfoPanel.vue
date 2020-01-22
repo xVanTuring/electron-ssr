@@ -4,9 +4,9 @@
     <ssr-group v-show="inGroupNode" class="flex-1 ml-1"/>
     <ssr-qrcode v-show="displaySSR&&!inGroupNode"/>
     <div class="control-panel">
-      <i-button class="w-6r" type="error" @click="removeClick">删除</i-button>
-      <i-button class="w-6r ml-3" type="primary" @click="save">保存</i-button>
-      <i-checkbox class="ml-3" v-model="displaySSR">显示二维码</i-checkbox>
+      <i-button class="w-6r" type="error" @click="removeClick">{{$t('UI_DELETE')}}</i-button>
+      <i-button class="w-6r ml-3" type="primary" @click="save">{{$t('UI_SAVE')}}</i-button>
+      <i-checkbox class="ml-3" v-model="displaySSR">{{$t('UI_DISPLAY_QRCODE')}}</i-checkbox>
     </div>
   </div>
 </template>

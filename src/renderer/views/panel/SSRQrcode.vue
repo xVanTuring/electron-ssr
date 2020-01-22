@@ -1,7 +1,7 @@
 <template>
   <!-- 二维码 -->
   <div class="app-qrcode flex flex-column flex-ai-center flex-jc-center pos-r">
-    <p class="tip mb-1">截图请注意打码</p>
+    <p class="tip mb-1">{{$t('UI_HIDE_INFO')}}</p>
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300" height="300"
       :view-box.camel="`0 0 ${editingConfigQR.size} ${editingConfigQR.size}`"
       @contextmenu="onRightClick" ref="svg">
@@ -9,8 +9,8 @@
     </svg>
     <ul v-if="contextmenu.show" class="contextmenu" v-clickoutside="clickoutside"
       :style="{left:contextmenu.left,right:contextmenu.right,top:contextmenu.top}">
-      <li @click="copyImage">复制图像</li>
-      <li @click="copyLink">复制链接</li>
+      <li @click="copyImage">{{$t('UI_COPY_IMAGE')}}</li>
+      <li @click="copyLink">{{$t('UI_COPY_LINK')}}</li>
     </ul>
     <div class="link flex flex-ai-center mt-1">
       <i-checkbox v-model="isSSR">SS(R)</i-checkbox>

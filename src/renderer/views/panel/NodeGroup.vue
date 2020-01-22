@@ -40,7 +40,7 @@ export default {
   },
   computed: {
     groupName () {
-      return this.node.title === '$ungrouped$' ? '未分组' : this.node.title
+      return this.node.title === '$ungrouped$' ? this.$t('SSR_UNGROUPED') : this.node.title
     }
   },
   methods: {
