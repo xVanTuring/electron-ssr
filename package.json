@@ -1,6 +1,6 @@
 {
   "name": "electron-ssr",
-  "version": "3.0.0",
+  "version": "0.3.0",
   "description": "Cross platform ShadowsocksR GUI client built with electron",
   "author": {
     "name": "The Electron-SSR Authors",
