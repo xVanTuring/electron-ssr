@@ -8,6 +8,9 @@
                   :key="group.id" :node="group"
                   @nodeSelected="nodeSelected"
                   @nodeActivated="nodeActivated"/>
+    <div class="empty-nodes" v-show="groupedNodes.length === 0">
+      {{$t('UI_NO_NODE')}}
+    </div>
     </div>
   </div>
 </template>
@@ -125,9 +128,11 @@ export default {
   },
   mounted () {
     // Auto scroll to selected(activated) node.
-    const selectedNode = this.$refs.nodeGroup.querySelector('.node-root.selected')
-    if (selectedNode) {
-      this.$refs.nodeGroup.scrollTop = selectedNode.offsetTop - 200
+    if (this.$refs.nodeGroup) {
+      const selectedNode = this.$refs.nodeGroup.querySelector('.node-root.selected')
+      if (selectedNode) {
+        this.$refs.nodeGroup.scrollTop = selectedNode.offsetTop - 200
+      }
     }
   }
 }
@@ -163,5 +168,12 @@ export default {
       overflow scroll
       overflow-x hidden
       height 100%
+      display flex
+      justify-content center;
+      align-items center;
+      // .empty-nodes
+      //   // width 100%;
+      //   // height 100%;
+      //   text-align center;
 
 </style>

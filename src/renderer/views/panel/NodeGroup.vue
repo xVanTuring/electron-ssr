@@ -63,6 +63,8 @@ export default {
 <style scoped>
 .ssr-node-group{
     padding-left: 4px;
+    width: 100%;
+    height: 100%;
 }
 .node-group-node{
     height: 32px;

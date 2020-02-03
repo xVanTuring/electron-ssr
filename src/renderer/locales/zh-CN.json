@@ -52,5 +52,6 @@
   "UI_NO_SUBS":"暂无订阅服务器",
   "UI_SUBSCRIPTION_URL":"订阅地址",
   "UI_ENTER_NEW_SUB_URL":"请输入新的订阅服务器的URL",
-  "UI_GROUP_NAME":"组名"
+  "UI_GROUP_NAME":"组名",
+  "UI_NO_NODE":"暂无节点，点击添加添加新节点"
 }

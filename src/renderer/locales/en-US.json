@@ -46,12 +46,13 @@
   "UI_UPDATE":"Update",
   "UI_SETTING_UPDATE_AUTO":"Auto Update",
   "UI_ENTER_VALID_URL":"Please enter valid URL",
-  "UI_PER":"per",
+  "UI_PER":"every",
   "UI_PER_DAY":"day",
   "UI_PER_HOUR":"hour",
   "UI_PER_WEEK":"week",
   "UI_NO_SUBS":"No Subscription",
   "UI_SUBSCRIPTION_URL":"URL",
   "UI_ENTER_NEW_SUB_URL":"Please enter new Subscription URL",
-  "UI_GROUP_NAME":"Group name"
+  "UI_GROUP_NAME":"Group name",
+  "UI_NO_NODE":"There is no node. Please go Setting-Add to add one"
 }
