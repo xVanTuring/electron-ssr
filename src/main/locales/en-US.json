@@ -29,5 +29,11 @@
      
     "MENU_SUB_CHECK_UPDATE": "Check Update",
     "MENU_SUB_DEVS": "Dev",
-    "MENU_SUB_DEVS_INSPECT_LOG": "Inspect Logs"
+    "MENU_SUB_DEVS_INSPECT_LOG": "Inspect Logs",
+
+    "TRAY_EDIT_SERVER": "Edit Server",
+    "TRAY_SUB_SETTINGS": "Subscription",
+    "TRAY_UPDATE_SUB_LINK": "Update Subscription",
+    "TRAY_MAIN_PAGE": "Main Page",
+    "TRAY_SERVERS": "Servers"
 }

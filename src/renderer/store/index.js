@@ -13,7 +13,7 @@ import {
 import { defaultSSRConfig } from '@/shared/ssr'
 import { syncConfig } from '../ipc'
 import { STORE_KEY_FEATURE, STORE_KEY_SSR_METHODS, STORE_KEY_SSR_PROTOCOLS, STORE_KEY_SSR_OBFSES } from '../constants'
-
+import i18n from '@/renderer/i18n'
 Vue.use(Vuex)
 
 // 当前编辑的配置项
@@ -229,6 +229,9 @@ export default new Vuex.Store({
       }
       if (initialSelected) {
         commit('setSelectedConfigId', initialSelected.id)
+      }
+      if (config.lang) {
+        i18n.locale = config.lang
       }
     },
     updateConfig ({ getters, commit }, targetConfig) {
