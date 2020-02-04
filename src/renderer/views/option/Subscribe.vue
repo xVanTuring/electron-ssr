@@ -17,7 +17,6 @@
             <i-option value="day">{{$t('UI_PER_DAY')}}</i-option>
             <i-option value="week">{{$t('UI_PER_WEEK')}}</i-option>
           </i-select>
-          <span>&nbsp;{{$t('UI_UPDATE')}}</span>
         </div>
       </div>
     </div>
