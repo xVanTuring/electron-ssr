@@ -66,15 +66,13 @@ export function syncConfig (appConfig) {
  */
 export function getInitConfig () {
   console.log('get init config data')
-  const res = ipcRenderer.sendSync(events.EVENT_APP_WEB_INIT)
-  store.dispatch('initConfig', res)
-}
-
-/**
- * 切换menu显示
- */
-export function toggleMenu () {
-  ipcRenderer.send(events.EVENT_APP_TOGGLE_MENU)
+  ipcRenderer.send(events.EVENT_APP_WEB_INIT)
+  return new Promise((resolve) => {
+    ipcRenderer.on(events.EVENT_APP_WEB_INIT, (event, res) => {
+      store.dispatch('initConfig', res)
+      resolve()
+    })
+  })
 }
 
 /**
