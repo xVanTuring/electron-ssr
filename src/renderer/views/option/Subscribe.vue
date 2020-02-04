@@ -274,10 +274,9 @@ export default {
 .options-container
   .cycle-wrapper
     .ivu-input-wrapper
-      width auto
+      width 60px
     .ivu-input
       padding 0
-      width 24px
       height 24px
       border-left none
       border-top none
@@ -287,8 +286,6 @@ export default {
       &:focus
         box-shadow none
     .ivu-select
-      width 24px
-      height 24px
       &.ivu-select-visible
         .ivu-select-selection
           box-shadow none
