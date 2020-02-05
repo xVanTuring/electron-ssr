@@ -7,8 +7,6 @@
     "email": "xVanTuring@outlook.com"
   },
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
@@ -23,7 +21,7 @@
     "download-git-repo": "^3.0.2",
     "electron-log": "^4.0.3",
     "electron-updater": "^4.2.0",
-    "erguotou-iview": "^2.9.1",
+    "iview": "^3.5.4",
     "fs-extra": "^8.1.0",
     "http-shutdown": "^1.2.2",
     "mousetrap": "^1.6.3",
