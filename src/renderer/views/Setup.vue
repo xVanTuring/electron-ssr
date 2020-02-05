@@ -2,19 +2,17 @@
   <app-view name="setup" class="px-2">
     <template v-if="(autoDownload || manualDownload) && !autoError">
       <i-spin/>
-      <p class="text-center mt-1">正在为您下载<dot></dot></p>
+      <p class="text-center mt-1">{{$t('UI_DOWNLOADING_FOR_YOU')}}<dot></dot></p>
     </template>
     <div v-else class="flex flex-column flex-ai-center w-100">
-      <div class="flex flex-ai-center w-100">
-        <div class="flex-1 flex flex-ai-center flex-jc-end">
-          <i-button type="primary" class="w-6r" @click="restart">{{autoError ? '点击重试' : '自动下载'}}</i-button>
-        </div>
+      <div class="flex flex-ai-center w-100 flex-jc-center">
+        <i-button type="primary"  @click="restart">{{autoError ? $t('UI_CLICK_TO_RETRY') : $t('UI_AUTO_DOWNLOAD')}}</i-button>
         <span class="mx-2">OR</span>
-        <div class="flex-1 flex flex-ai-center">
-          <i-form ref="form" class="flex-1" :model="form" :rules="rules" inline>
+        <div>
+          <i-form ref="form" class="flex-1" :model="form" :rules="rules">
             <i-form-item prop="ssrPath" style="margin-bottom:0">
-              <i-button type="primary" class="w-6r" @click="selectPath">手动选择</i-button>
-              <i-input v-model="form.ssrPath" readonly placeholder="所选目录下需有local.py文件" style="width:180px"/>
+              <i-button type="primary"  @click="selectPath">{{$t('UI_SELECT_MANAULLY')}}</i-button>
+              <i-input v-model="form.ssrPath" readonly :placeholder="$t('UI_LOCAL_PY_FILE_REQUIRED')" style="width:200px;margin-left:8px;"/>
             </i-form-item>
           </i-form>
         </div>
@@ -45,12 +43,12 @@ export default {
       },
       rules: {
         ssrPath: [
-          { required: true, message: '请选择shadowsocks目录' },
+          { required: true, message: this.$t('UI_PLEASE_SELECT_SS_FOLDER') },
           { validator: (rule, value, callback) => {
             if (isSSRPathAvaliable(value)) {
               callback()
             } else {
-              callback(new Error('该目录不正确，请重新选择'))
+              callback(new Error(this.$t('UI_INCORRECT_FOLDER')))
             }
           } }
         ]
