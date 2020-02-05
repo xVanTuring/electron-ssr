@@ -8,6 +8,8 @@ import logger from './logger'
 import { isConfigEqual } from '../shared/utils'
 import { showNotification } from './notification'
 import { toggleEnable } from './tray-handler'
+import * as i18n from './locales'
+const $t = i18n.default
 let child
 
 /**
@@ -84,7 +86,7 @@ export async function run (appConfig) {
     logger.error('SSR Client Port Check failed, with error: ')
     logger.error(e)
     toggleEnable()
-    dialog.showErrorBox(`端口 ${appConfig.localPort} 被占用`, '请检查你端口占用')
+    dialog.showErrorBox($t('NOTI_PORT_TAKEN', { 'port': appConfig.localPort }), $t('NOTI_CHECK_PORT'))
   }
 }
 
@@ -104,23 +106,11 @@ export function stop (force = false) {
       })
       const timeout = setTimeout(() => {
         // 5m内如果还没有关掉仍然resolve
-        logger.error(`进程 ${child.pid} 可能无法关闭`)
-        !force && showNotification(`进程 ${child.pid} 可能无法关闭，尝试手动关闭`)
+        logger.error(`Process ${child.pid} may not shut down`)
+        !force && showNotification($t('NOTI_PROCESS_CANT_KILL', { port: child.pid }))
         resolve()
       }, 5000)
       process.kill(child.pid, 'SIGKILL')
-      // child.kill()
-      // treeKill(child.pid, 'SIGKILL', err => {
-      //   if (err) {
-      //     reject(err)
-      //   } else {
-      //     // TODO: 待优化，目前是通过延迟一定时间来保证端口确实不被占用
-      //     setTimeout(() => {
-      //       child = null
-      //       resolve()
-      //     }, 100)
-      //   }
-      // })
     })
   }
   return Promise.resolve()

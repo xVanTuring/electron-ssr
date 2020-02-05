@@ -35,6 +35,10 @@
     "TRAY_SUB_SETTINGS": "订阅管理",
     "TRAY_UPDATE_SUB_LINK": "更新订阅服务器",
     "TRAY_MAIN_PAGE": "主界面",
-    "TRAY_SERVERS": "服务器"
+    "TRAY_SERVERS": "服务器",
+
+    "NOTI_PORT_TAKEN":"端口 {port} 被占用",
+    "NOTI_CHECK_PORT":"请检查你端口占用",
+    "NOTI_PROCESS_CANT_KILL":"进程 {pid} 可能无法关闭，尝试手动关闭"
 
 }

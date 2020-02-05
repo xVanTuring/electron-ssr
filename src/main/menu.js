@@ -6,12 +6,13 @@ import * as events from '../shared/events'
 import { checkUpdate } from './updater'
 import { isMac } from '../shared/env'
 import { sendData } from './window'
-import $t from './locales'
+import * as i18n from './locales'
+const $t = i18n.default
 /**
  * 渲染菜单
  */
 export default function renderMenu (appConfig) {
-  $t(undefined, appConfig.lang || 'en-US')
+  i18n.setLocal(appConfig.lang || 'en-US')
   // mac需要加上默认的一些菜单，否则没法复制粘贴
   let template
   template = [

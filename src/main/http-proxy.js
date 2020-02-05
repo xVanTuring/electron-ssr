@@ -4,7 +4,8 @@ import { dialog } from 'electron'
 import { appConfig$ } from './data'
 import { ensureHostPortValid } from './port'
 import logger from './logger'
-
+import * as i18n from './locales'
+const $t = i18n.default
 let server
 
 httpShutdown.extend()
@@ -33,11 +34,7 @@ export function startHttpProxyServer (appConfig, isProxyStarted) {
           server.shutdown()
         })
     }).catch(() => {
-      dialog.showMessageBox({
-        type: 'warning',
-        title: '警告',
-        message: `http代理端口 ${appConfig.httpProxyPort} 被占用`
-      })
+      dialog.showErrorBox($t('NOTI_PORT_TAKEN', { 'port': appConfig.httpProxyPort }), $t('NOTI_CHECK_PORT'))
     })
   }
 }

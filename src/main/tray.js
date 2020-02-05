@@ -5,7 +5,8 @@ import { checkUpdate } from './updater'
 import { groupConfigs } from '../shared/utils'
 import { isMac, isOldMacVersion, isWin } from '../shared/env'
 import { disabledTray, enabledHighlightTray, enabledTray, globalHighlightTray, globalTray, pacHighlightTray, pacTray } from '../shared/icon'
-import $t from './locales'
+import * as i18n from './locales'
+const $t = i18n.default
 let tray
 
 /**
@@ -53,7 +54,7 @@ function generateConfigSubmenus (configs, selectedIndex) {
  * @param {Object} appConfig 应用配置
  */
 function generateMenus (appConfig) {
-  $t(undefined, appConfig.lang || 'en-US')
+  i18n.setLocal(appConfig.lang || 'en-US')
   const base = [
     { label: $t('TRAY_MAIN_PAGE'), click: handler.showManagePanel },
     { label: $t('MENU_SUB_ENABLE_APP'),

@@ -35,5 +35,9 @@
     "TRAY_SUB_SETTINGS": "Subscription",
     "TRAY_UPDATE_SUB_LINK": "Update Subscription",
     "TRAY_MAIN_PAGE": "Main Page",
-    "TRAY_SERVERS": "Servers"
+    "TRAY_SERVERS": "Servers",
+
+    "NOTI_PORT_TAKEN":"Port {port} has been taken",
+    "NOTI_CHECK_PORT":"Please check yout port",
+    "NOTI_PROCESS_CANT_KILL":"Process {pid} may not be closed, please try close it manually"
 }
