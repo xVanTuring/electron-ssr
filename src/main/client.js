@@ -7,6 +7,7 @@ import { ensureHostPortValid } from './port'
 import logger from './logger'
 import { isConfigEqual } from '../shared/utils'
 import { showNotification } from './notification'
+import { toggleEnable } from './tray-handler'
 let child
 
 /**
@@ -82,6 +83,7 @@ export async function run (appConfig) {
   } catch (e) {
     logger.error('SSR Client Port Check failed, with error: ')
     logger.error(e)
+    toggleEnable()
     dialog.showErrorBox(`端口 ${appConfig.localPort} 被占用`, '请检查你端口占用')
   }
 }
