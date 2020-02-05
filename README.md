@@ -91,7 +91,7 @@ Feel free to propose a new revision.
 
 
 ## Build
-
+> You might want to customize the build target in `vue.config.js`
 ``` bash
 # or npm install
 yarn

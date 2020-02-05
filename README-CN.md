@@ -89,7 +89,7 @@
 
 
 ## 开发和构建
-
+> 你可能需要在 `vue.config.js` 文件中修改输出格式
 ``` bash
 # or npm install
 yarn
