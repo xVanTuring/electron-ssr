@@ -2,7 +2,7 @@
 
 [中文](./README-CN.md)
 
-`ShadowsocksR` is a cross-platform desktop client with support for Windows, MacOS and Linux. It is feature-rich, supports most of the features of the Windows version and has more user-friendly features. It is open source, is based on open source projects and gives back to the open source community.
+`ShadowsocksR` is a cross-platform desktop client with support for Windows, macOS and Linux. It is feature-rich, supports most of the features of the Windows version and has more user-friendly features. It is open source, is based on open source projects and gives back to the open source community.
 
 ## Note for Linux user
 
@@ -24,7 +24,7 @@ On some systems that use `Gnome` desktop, except `Ubuntu 18.04`, may not have th
 - Support for copying QR codes and copying the ssr link (right click on the QR code and select copy in the context menu)
 - Support for adding configurations and opening the application by clicking the ss/ssr link (Mac and Windows only). Please use the link above to test.
 - Support for switching the system proxy mode: PAC, global proxy, no proxy
-- [Built-in http_proxy](docs/HTTP_PROXY.md), can be turned on on or off in the options
+- [Built-in http_proxy](docs/HTTP_PROXY.md), can be turned on or off in the options
 - Support for changing the configuration
 - Additional features in the menu bar
 
@@ -64,7 +64,7 @@ The shortcuts were originally added to solve the problem that some Linux distrib
 
 ## Known Bugs
 
-- Some Linux system cannot switch system proxy mode. This application uses `gsetting` to set the system proxy, so some Linux systems cannot use this feature. If you know how to implement it, please feel free to create an issue.
+- Some Linux systems cannot switch system proxy mode. This application uses `gsetting` to set the system proxy, so some Linux systems cannot use this feature. If you know how to implement it, please feel free to create an issue.
 - Switching the global system proxy on Windows fails
 
 ## Application screenshots
@@ -83,7 +83,7 @@ The shortcuts were originally added to solve the problem that some Linux distrib
 
 Before creating an issue please check whether the instructions in the FAQ can solve your problem.
 Please first check whether there exists a similar issue. If there is please follow up on that issue.
-Additionally if you find a bug please describe your environment in the issue. This includes operating system, software version, steps to reproduce, error logs etc.
+Additionally, if you find a bug please describe your environment in the issue. This includes the operating system, software version, steps to reproduce, error logs, etc.
 
 ## Icon resources
 
