@@ -1,41 +1,59 @@
-import proxyServer from 'simple-web-proxy'
-import httpShutdown from 'http-shutdown'
+
 import { dialog } from 'electron'
 import { appConfig$ } from './data'
 import { ensureHostPortValid } from './port'
+import { privoxyPath, privoxyCfgPath } from './bootstrap'
+import { spawn } from 'child_process'
 import logger from './logger'
+import * as fse from 'fs-extra'
 import * as i18n from './locales'
+import { isWin } from '@/shared/env'
 const $t = i18n.default
-let server
+let privoxyInstance
 
-httpShutdown.extend()
+async function ensurePrivoxyCfg (ssrport, listenPort, shareOverLan) {
+  let config = []
+  config.push(`listen-address ${shareOverLan ? '0.0.0.0' : '127.0.0.1'}:${listenPort}`)
+  config.push('forward         192.168.*.*/     .')
+  config.push('forward         10.*.*.*/        .')
+  config.push('forward         127.*.*.*/       .')
+  config.push(`forward-socks5 / 127.0.0.1:${ssrport} .`)
+  await fse.writeFile(privoxyCfgPath, config.join('\n'))
+}
 
 /**
  * 开启HTTP代理服务
  * @param {Object} appConfig 应用配置
  */
-export function startHttpProxyServer (appConfig, isProxyStarted) {
+async function startHttpProxyServer (appConfig, isProxyStarted) {
   if (isProxyStarted && appConfig.httpProxyEnable) {
     const host = appConfig.shareOverLan ? '0.0.0.0' : '127.0.0.1'
-    ensureHostPortValid(host, appConfig.httpProxyPort).then(() => {
-      server = proxyServer({
-        listenHost: host,
-        listenPort: appConfig.httpProxyPort,
-        socksPort: appConfig.localPort
-      }).withShutdown()
-        .on('listening', () => {
-          logger.info(`http proxy server listen at: ${host}:${appConfig.httpProxyPort}`)
+    try {
+      await ensureHostPortValid(host, appConfig.httpProxyPort)
+      await ensurePrivoxyCfg(appConfig.localPort, appConfig.httpProxyPort, appConfig.shareOverLan)
+      if (isWin) {
+        console.log(privoxyCfgPath)
+        privoxyInstance = spawn(privoxyPath, [privoxyCfgPath], {
+          windowsHide: true
         })
-        .on('connect:error', err => {
-          logger.error(`http proxy server connect error: ${err}`)
-        })
-        .once('error', err => {
-          logger.error(`http proxy server error: ${err}`)
-          server.shutdown()
-        })
-    }).catch(() => {
+      } else {
+        privoxyInstance = spawn(privoxyPath, ['--no-daemon', privoxyCfgPath])
+      }
+      logger.debug(`privoxyInstance is running at pid: ${privoxyInstance.pid}`)
+      privoxyInstance.stderr.on('data', (info) => {
+        logger.info(`privoxy: ${info}`)
+      })
+      privoxyInstance.stdout.on('data', (info) => {
+        logger.info(`privoxy: ${info}`)
+      })
+      privoxyInstance.on('exit', (code) => {
+        logger.info(`Privoxy quit with code: ${code}`)
+        privoxyInstance = null
+      })
+    } catch (error) {
+      logger.info(error)
       dialog.showErrorBox($t('NOTI_PORT_TAKEN', { 'port': appConfig.httpProxyPort }), $t('NOTI_CHECK_PORT'))
-    })
+    }
   }
 }
 
@@ -43,17 +61,18 @@ export function startHttpProxyServer (appConfig, isProxyStarted) {
  * 关闭HTTP代理服务
  */
 export async function stopHttpProxyServer () {
-  if (server && server.listening) {
-    return new Promise((resolve, reject) => {
-      server.shutdown(err => {
-        if (err) {
-          logger.warn(`close http proxy server error: ${err}`)
-          reject(new Error(`close http proxy server error: ${err}`))
-        } else {
-          logger.info('http proxy server closed.')
-          resolve()
-        }
+  if (privoxyInstance && !privoxyInstance.killed) {
+    return new Promise((resolve) => {
+      const timeout = setTimeout(() => {
+        logger.warn('Privoxy can\'t be closed. Ignoring!')
+        resolve()
+      }, 3000)
+      privoxyInstance.on('exit', (code) => {
+        logger.info(`Privoxy exited with code ${code}`)
+        clearTimeout(timeout)
+        privoxyInstance = null
       })
+      privoxyInstance.kill()
     })
   }
   return Promise.resolve()

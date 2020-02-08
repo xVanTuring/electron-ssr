@@ -38,20 +38,28 @@ export const appConfigPath = path.join(appConfigDir, 'gui-config.json')
 export const defaultSSRDownloadDir = path.join(appConfigDir, 'shadowsocksr')
 // pac文件下载目录
 export const pacPath = path.join(appConfigDir, 'pac.txt')
+
+export const privoxyCfgPath = path.join(appConfigDir, 'privoxy.cfg')
 // 记录上次订阅更新时间的文件
 export const subscribeUpdateFile = path.join(appConfigDir, '.subscribe.update.last')
 // 当前可执行程序的路径
 export const exePath = app.getPath('exe')
 // windows sysproxy.exe文件的路径
 let _winToolPath
+let _privoxyPath
 if (isWin) {
   if (process.env.NODE_ENV === 'development') {
-    _winToolPath = path.resolve(__dirname, '../lib/sysproxy.exe')
+    _winToolPath = path.resolve(__dirname, '../src/lib/sysproxy.exe')
+    _privoxyPath = path.resolve(__dirname, '../src/lib/privoxy.exe')
   } else {
-    _winToolPath = path.join(exePath, '../sysproxy.exe')
+    _winToolPath = path.join(path.dirname(exePath), './3rdparty/sysproxy.exe')
+    _privoxyPath = path.join(path.dirname(exePath), './3rdparty/privoxy.exe')
   }
+} else if (isLinux || isMac) {
+  _privoxyPath = 'privoxy'
 }
 export const winToolPath = _winToolPath
+export const privoxyPath = _privoxyPath
 // mac proxy_conf_helper工具目录
 export const macToolPath = path.resolve(appConfigDir, 'proxy_conf_helper')
 
@@ -95,5 +103,4 @@ async function init () {
   }
   return readyPromise
 }
-
-export default init()
+export default init

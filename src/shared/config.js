@@ -22,7 +22,7 @@ const defaultConfig = {
   // 订阅列表
   serverSubscribes: [],
   // 是否开启http proxy
-  httpProxyEnable: true,
+  httpProxyEnable: false,
   // 全局快捷键
   globalShortcuts: {
     toggleWindow: {
