@@ -21,6 +21,7 @@ export function runCommand (command, params) {
     const commandStr = `${command} ${params.join(' ')}`
     logger.info('run command: %s', commandStr.replace(/-k [\d\w]* /, '-k ****** '))
     child = execFile(command, params)
+    logger.debug(`Python SSR start with pid: ${child.pid}`)
     child.stdout.on('data', logger.info)
     child.stderr.on('data', (error) => {
       error.split('\n').forEach(msg => {
@@ -30,6 +31,8 @@ export function runCommand (command, params) {
           logger.error(msg)
         } else if (msg.indexOf('WARNING') >= 0) {
           logger.warn(msg)
+        } else {
+          logger.info(msg)
         }
       })
     })
@@ -96,21 +99,23 @@ export async function run (appConfig) {
 export function stop (force = false) {
   if (child && child.pid) {
     logger.log('Kill client')
-    return new Promise((resolve, reject) => {
-      child.once('close', () => {
+    return new Promise((resolve) => {
+      const timeout = setTimeout(() => {
+        // 5m内如果还没有关掉仍然resolve
+        if (child && !child.killed) {
+          logger.error(`Process ${child.pid} may not shut down`)
+          !force && showNotification($t('NOTI_PROCESS_CANT_KILL', { pid: child.pid }))
+        }
+        resolve()
+      }, 5000)
+      child.once('exit', (code) => {
         child = null
         if (timeout) {
           clearTimeout(timeout)
         }
         resolve()
       })
-      const timeout = setTimeout(() => {
-        // 5m内如果还没有关掉仍然resolve
-        logger.error(`Process ${child.pid} may not shut down`)
-        !force && showNotification($t('NOTI_PROCESS_CANT_KILL', { port: child.pid }))
-        resolve()
-      }, 5000)
-      process.kill(child.pid, 'SIGKILL')
+      child.kill()
     })
   }
   return Promise.resolve()

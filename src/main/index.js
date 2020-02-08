@@ -34,8 +34,7 @@ if (!isPrimaryInstance) {
       }
     }
   })
-
-  bootstrap.then(async () => {
+  bootstrap().then(async () => {
     if (isDevelopment) {
       console.log('Ensure Vue Devtools has been installed')
       installVueDevtools()
