@@ -3,7 +3,6 @@ import AutoLaunch from 'auto-launch'
 import bootstrap from './bootstrap'
 import { isQuiting, appConfig$, currentConfig, addConfigs } from './data'
 import { destroyTray } from './tray'
-import { checkUpdate } from './updater'
 import './menu'
 import './ipc'
 import { stopPacServer } from './pac'
@@ -43,10 +42,6 @@ if (!isPrimaryInstance) {
     if (isWin || isMac) {
       app.setAsDefaultProtocolClient('ssr')
       app.setAsDefaultProtocolClient('ss')
-    }
-
-    if (process.env.NODE_ENV !== 'development') {
-      checkUpdate()
     }
 
     // 开机自启动配置

@@ -1,7 +1,6 @@
 import { Menu, nativeImage, Tray } from 'electron'
 import { appConfig$ } from './data'
 import * as handler from './tray-handler'
-import { checkUpdate } from './updater'
 import { groupConfigs } from '../shared/utils'
 import { isMac, isOldMacVersion, isWin } from '../shared/env'
 import { disabledTray, enabledHighlightTray, enabledTray, globalHighlightTray, globalTray, pacHighlightTray, pacTray } from '../shared/icon'
@@ -69,7 +68,7 @@ function generateMenus (appConfig) {
         { label: $t('MENU_SUB_UPDATE_PAC'), click: handler.updatePac }
       ] },
     { label: $t('TRAY_SERVERS'), submenu: generateConfigSubmenus(appConfig.configs, appConfig.index) },
-    { label: $t('二维码扫描'), click: handler.scanQRCode },
+    { label: $t('MENU_SUB_ADD_FROM_QR_SCAN'), click: handler.scanQRCode },
     { label: $t('MENU_SETTINGS'),
       submenu: [
         { label: $t('MENU_SUB_SETTING_OPTIONS'), click: handler.showOptions },
@@ -81,7 +80,6 @@ function generateMenus (appConfig) {
     { label: $t('MENU_SUB_CHECK_UPDATE'), click: handler.copyHttpProxyCode },
     { label: $t('MENU_HELP'),
       submenu: [
-        { label: $t('MENU_SUB_DEVS_INSPECT_LOG'), click: () => checkUpdate(true) },
         { label: $t('MENU_SUB_DEVS_INSPECT_LOG'), click: handler.openLog }
       ] },
     { role: 'quit' }
