@@ -109,8 +109,11 @@ function createNewConfig () {
 // 监听数据变更
 appConfig$.subscribe(data => {
   const [appConfig, changed] = data
-  if (!changed.length) {
-    renderMenu(appConfig)
+  if (changed.length === 0) {
+    // hack for windows: menu doesn't show
+    setTimeout(() => {
+      renderMenu(appConfig)
+    }, 300)
   } else {
     if (['enable', 'sysProxyMode', 'lang'].some(key => changed.indexOf(key) > -1)) {
       renderMenu(appConfig)
