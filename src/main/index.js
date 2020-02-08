@@ -23,7 +23,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production' && !process.env.IS_T
 if (!isPrimaryInstance) {
   app.exit()
 } else {
-  app.on('second-instance', (event, argv) => {
+  app.on('second-instance', (_, argv) => {
     showWindow()
     // 如果是通过链接打开的应用，则添加记录
     if (argv[1]) {
@@ -90,6 +90,8 @@ if (!isPrimaryInstance) {
       // startProxy()
       startTask(currentConfig)
     })
+  }).then(err => {
+    logger.error(err)
   })
 
   app.on('window-all-closed', () => {

@@ -1,12 +1,12 @@
 import { app, ipcMain, dialog } from 'electron'
 import { readJson } from 'fs-extra'
 import downloadGitRepo from 'download-git-repo'
-import * as events from '../shared/events'
+import * as events from '@/shared/events'
 import { appConfigPath, defaultSSRDownloadDir } from './bootstrap'
 import { updateAppConfig } from './data'
 import { hideWindow, sendData } from './window'
 import { importConfigFromClipboard } from './tray-handler'
-import defaultConfig from '../shared/config'
+import defaultConfig, { mergeConfig } from '@/shared/config'
 import { showNotification } from './notification'
 import logger from './logger'
 
@@ -21,6 +21,7 @@ ipcMain.on(events.EVENT_APP_HIDE_WINDOW, () => {
   let stored
   try {
     stored = await readJson(appConfigPath)
+    mergeConfig(stored)
   } catch (error) {
     stored = defaultConfig
   }
