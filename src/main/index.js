@@ -36,7 +36,9 @@ if (!isPrimaryInstance) {
   bootstrap().then(async () => {
     if (isDevelopment) {
       console.log('Ensure Vue Devtools has been installed')
-      installVueDevtools()
+      installVueDevtools().catch(err => {
+        logger.debug('Unable to install Vue Devtools', err)
+      })
     }
     createWindow()
     if (isWin || isMac) {

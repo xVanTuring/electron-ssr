@@ -86,5 +86,10 @@ export function hideWindow () {
  * 打开本地文件/目录
  */
 export function openDialog (options) {
-  return ipcRenderer.sendSync(events.EVENT_APP_OPEN_DIALOG, options)
+  return new Promise((resolve) => {
+    ipcRenderer.send(events.EVENT_APP_OPEN_DIALOG, options)
+    ipcRenderer.on(events.EVENT_APP_OPEN_DIALOG, (_, result) => {
+      resolve(result)
+    })
+  })
 }

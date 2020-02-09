@@ -59,7 +59,7 @@
 <script>
 import { mapActions } from 'vuex'
 import { isSSRPathAvaliable, debounce } from '../../../shared/utils'
-import { openDialog } from '../../ipc'
+import { openDialog } from '@/renderer/ipc'
 import i18n from '@/renderer/i18n'
 export default {
   data () {
@@ -78,12 +78,13 @@ export default {
       rules: {
         ssrPath: [
           {
-            validator: (rule, value, callback) => {
-              if (isSSRPathAvaliable(value)) {
-                callback()
-              } else {
-                callback(new Error('该目录不正确，请重新选择'))
-              }
+            validator: (_, value) => {
+              return isSSRPathAvaliable(value).then(exists => {
+                if (exists) {
+                  return Promise.resolve()
+                }
+                return Promise.reject(new Error(this.$t('UI_INCORRECT_FOLDER')))
+              })
             }
           }
         ]
@@ -117,8 +118,8 @@ export default {
       })
     },
     // 选择目录
-    selectPath () {
-      const path = openDialog({
+    async selectPath () {
+      const path = await openDialog({
         properties: ['openDirectory']
       })
       if (path && path.length) {

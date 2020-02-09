@@ -53,7 +53,7 @@ ipcMain.on(events.EVENT_APP_HIDE_WINDOW, () => {
   showNotification(body, title)
 }).on(events.EVENT_APP_OPEN_DIALOG, async (e, params) => {
   const ret = await dialog.showOpenDialog(params)
-  e.returnValue = ret.filePaths
+  e.reply(events.EVENT_APP_OPEN_DIALOG, ret.filePaths)
 })
 
 /**

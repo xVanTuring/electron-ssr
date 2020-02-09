@@ -15,15 +15,14 @@ export const readyPromise = new Promise(resolve => {
     app.once('ready', resolve)
   }
 })
-
-// 检查python是否安装
-if (!isPythonInstalled) {
-  dialog.showErrorBox('警告', '未检测到python' +
-    '\n本程序所使用的后端为python版ssr/ssrr' +
-    '\n请确保已安装python且可正常使用，否则软件可能无法正常运行')
-  // python未安装时自动下载并安装
-  // require('./python').init()
-}
+isPythonInstalled.then((value) => {
+  // 检查python是否安装
+  if (!value) {
+    dialog.showErrorBox('警告', '未检测到python' +
+      '\n本程序所使用的后端为python版ssr/ssrr' +
+      '\n请确保已安装python且可正常使用，否则软件可能无法正常运行')
+  }
+})
 
 // 未捕获的rejections
 process.on('unhandledRejection', (reason) => {
