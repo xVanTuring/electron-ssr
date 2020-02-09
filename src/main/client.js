@@ -1,6 +1,6 @@
 import path from 'path'
 import { execFile } from 'child_process'
-// import treeKill from 'tree-kill'
+import { libsodiumDir } from './bootstrap'
 import { dialog } from 'electron'
 import { appConfig$ } from './data'
 import { ensureHostPortValid } from './port'
@@ -9,41 +9,63 @@ import { isConfigEqual } from '../shared/utils'
 import { showNotification } from './notification'
 import { toggleEnable } from './tray-handler'
 import * as i18n from './locales'
+import { isWin } from '@/shared/env'
 const $t = i18n.default
-let child
+/**
+ * @type {import('child_process').ChildProcess|null}
+ */
+let pythonSSRInstance
 
 /**
  * 运行shell命令并写入到日志中
- * @param {*String} command 待执行的shell命令
+ * @param {string[]} params 待执行的shell命令
  */
-export function runCommand (command, params) {
-  if (command && params.length) {
-    const commandStr = `${command} ${params.join(' ')}`
-    logger.info('run command: %s', commandStr.replace(/-k [\d\w]* /, '-k ****** '))
-    child = execFile(command, params)
-    logger.debug(`Python SSR start with pid: ${child.pid}`)
-    child.stdout.on('data', logger.info)
-    child.stderr.on('data', (error) => {
-      error.split('\n').forEach(msg => {
-        if (msg.indexOf('INFO') >= 0) {
-          logger.info(msg)
-        } else if (msg.indexOf('ERROR') >= 0) {
-          logger.error(msg)
-        } else if (msg.indexOf('WARNING') >= 0) {
-          logger.warn(msg)
-        } else {
-          logger.info(msg)
-        }
-      })
+function runPythonSSR (params) {
+  let command = 'python'
+  const commandStr = `${command} ${params.join(' ')}`
+  logger.info('run command: %s', commandStr.replace(/-k [\d\w]* /, '-k ****** '))
+  if (isWin) {
+    let _env = process.env
+    logger.debug(`adding libsodiumDir: ${libsodiumDir} to PATH`)
+    let _path = ''
+    if (_env.path) {
+      _path = `${_env.path};${libsodiumDir}`
+    } else {
+      _path = libsodiumDir
+    }
+    logger.debug(`Current PATH: ${_path}`)
+    pythonSSRInstance = execFile(command, params, {
+      env: {
+        path: _path
+      }
     })
+  } else {
+    pythonSSRInstance = execFile(command, params)
   }
+  logger.debug(`Python SSR start with pid: ${pythonSSRInstance.pid}`)
+  pythonSSRInstance.stdout.on('data', logger.info)
+  pythonSSRInstance.stderr.on('data', (error) => {
+    error.split('\n').forEach(msg => {
+      if (msg.indexOf('INFO') >= 0) {
+        logger.info(msg)
+      } else if (msg.indexOf('ERROR') >= 0) {
+        logger.error(msg)
+      } else if (msg.indexOf('WARNING') >= 0) {
+        logger.warn(msg)
+      } else {
+        logger.info(msg)
+      }
+    })
+  })
+  pythonSSRInstance.once('exit', (code) => {
+    logger.debug(`Python SSR exit with code: ${code}`)
+    pythonSSRInstance = null
+  })
 }
 
 /**
  * 运行ssr
- * @param {*Object} config ssr配置
- * @param {*String} ssrPath local.py的路径
- * @param {*[Number|String]} localPort 本地共享端口
+ * @param {Object} appConfig ssr配置
  */
 export async function run (appConfig) {
   const listenHost = appConfig.shareOverLan ? '0.0.0.0' : '127.0.0.1'
@@ -84,7 +106,7 @@ export async function run (appConfig) {
       params.push('-t')
       params.push(config.timeout)
     }
-    runCommand('python', params)
+    runPythonSSR(params)
   } catch (e) {
     logger.error('SSR Client Port Check failed, with error: ')
     logger.error(e)
@@ -97,25 +119,26 @@ export async function run (appConfig) {
  * 结束command的后台运行
  */
 export function stop (force = false) {
-  if (child && child.pid) {
+  if (pythonSSRInstance && !pythonSSRInstance.killed) {
     logger.log('Kill client')
     return new Promise((resolve) => {
       const timeout = setTimeout(() => {
         // 5m内如果还没有关掉仍然resolve
-        if (child && !child.killed) {
-          logger.error(`Process ${child.pid} may not shut down`)
-          !force && showNotification($t('NOTI_PROCESS_CANT_KILL', { pid: child.pid }))
+        if (pythonSSRInstance && !pythonSSRInstance.killed) {
+          logger.error(`Process ${pythonSSRInstance.pid} may not shut down`)
+          !force && showNotification($t('NOTI_PROCESS_CANT_KILL', { pid: pythonSSRInstance.pid }))
         }
         resolve()
       }, 5000)
-      child.once('exit', (code) => {
-        child = null
+      pythonSSRInstance.once('exit', (code) => {
+        logger.debug(`Python SSR exit with code: ${code}`)
+        pythonSSRInstance = null
         if (timeout) {
           clearTimeout(timeout)
         }
         resolve()
       })
-      child.kill()
+      pythonSSRInstance.kill()
     })
   }
   return Promise.resolve()
@@ -126,7 +149,7 @@ export function stop (force = false) {
  * @param {Object} appConfig 应用配置
  */
 export function runWithConfig (appConfig) {
-  if (appConfig.ssrPath && appConfig.enable && appConfig.configs && appConfig.configs[appConfig.index]) {
+  if (appConfig.ssrPath && appConfig.enable && appConfig.configs && appConfig.index >= 0 && appConfig.configs[appConfig.index]) {
     run(appConfig)
   }
 }

@@ -26,8 +26,8 @@ if (!isPythonInstalled) {
 }
 
 // 未捕获的rejections
-process.on('unhandledRejection', (reason, p) => {
-  logger.error(`Unhandled Rejection at: Promise ${p}, reason: ${reason}`)
+process.on('unhandledRejection', (reason) => {
+  logger.error('Unhandled Rejection, reason: ', reason)
 })
 
 // 应用配置存储目录
@@ -47,13 +47,16 @@ export const exePath = app.getPath('exe')
 // windows sysproxy.exe文件的路径
 let _winToolPath
 let _privoxyPath
+let _libsodiumDir
 if (isWin) {
   if (process.env.NODE_ENV === 'development') {
     _winToolPath = path.resolve(__dirname, '../src/lib/sysproxy.exe')
     _privoxyPath = path.resolve(__dirname, '../src/lib/privoxy.exe')
+    _libsodiumDir = path.resolve(__dirname, '../src/lib/')
   } else {
     _winToolPath = path.join(path.dirname(exePath), './3rdparty/sysproxy.exe')
     _privoxyPath = path.join(path.dirname(exePath), './3rdparty/privoxy.exe')
+    _libsodiumDir = path.join(path.dirname(exePath), './3rdparty')
   }
 } else if (isLinux || isMac) {
   _privoxyPath = 'privoxy'
@@ -62,7 +65,7 @@ export const winToolPath = _winToolPath
 export const privoxyPath = _privoxyPath
 // mac proxy_conf_helper工具目录
 export const macToolPath = path.resolve(appConfigDir, 'proxy_conf_helper')
-
+export const libsodiumDir = _libsodiumDir
 // try fix linux dismiss bug
 if (isLinux) {
   process.env.XDG_CURRENT_DESKTOP = 'Unity'

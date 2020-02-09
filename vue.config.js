@@ -24,6 +24,7 @@ switch (platform) {
     extraFiles.push({ from: 'src/lib/sysproxy.exe', to: './3rdparty/sysproxy.exe' })
     extraFiles.push({ from: 'src/lib/privoxy.exe', to: './3rdparty/privoxy.exe' })
     extraFiles.push({ from: 'src/lib/mgwz.dll', to: './3rdparty/mgwz.dll' })
+    extraFiles.push({ from: 'src/lib/x64-libsodium.dll', to: './3rdparty/libsodium.dll' })
     files = files.concat(winImages)
     break
   case 'linux':
@@ -91,7 +92,7 @@ module.exports = {
           icon: 'build/icons/icon.ico',
           target: [
             {
-              target: 'dir',
+              target: 'nsis',
               arch: ['x64']
             }
           ]
