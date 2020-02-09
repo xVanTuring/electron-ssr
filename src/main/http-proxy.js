@@ -9,6 +9,9 @@ import * as fse from 'fs-extra'
 import * as i18n from './locales'
 import { isWin } from '@/shared/env'
 const $t = i18n.default
+/**
+ * @type {import('child_process').ChildProcess|null|undefined}
+ */
 let privoxyInstance
 
 async function ensurePrivoxyCfg (ssrport, listenPort, shareOverLan) {
@@ -59,18 +62,22 @@ async function startHttpProxyServer (appConfig, isProxyStarted) {
 
 /**
  * 关闭HTTP代理服务
+ * @returns {Promise<void>}
  */
-export async function stopHttpProxyServer () {
+export function stopHttpProxyServer () {
   if (privoxyInstance && !privoxyInstance.killed) {
     return new Promise((resolve) => {
       const timeout = setTimeout(() => {
-        logger.warn('Privoxy can\'t be closed. Ignoring!')
+        if (privoxyInstance && !privoxyInstance.killed) {
+          logger.warn('Privoxy can\'t be closed. Ignoring!')
+        }
         resolve()
       }, 3000)
       privoxyInstance.on('exit', (code) => {
         logger.info(`Privoxy exited with code ${code}`)
         clearTimeout(timeout)
         privoxyInstance = null
+        resolve()
       })
       privoxyInstance.kill()
     })

@@ -23,7 +23,8 @@ let isProxyChanged = false
 
 /**
  * 运行命令
- * @param {String} command 待运行的命令
+ * @param {string} command 待运行的命令
+ * @returns {Promise<void>}
  */
 function runCommand (command) {
   return new Promise((resolve) => {
@@ -44,7 +45,8 @@ function runCommand (command) {
 }
 
 /**
- * 设置代理为空, force表示强制设置，否则根据isProxyChanged字段判断是否需要设置为空
+ * 设置代理为空,否则根据isProxyChanged字段判断是否需要设置为空
+ * @param {boolean} force 强制设置
  */
 export async function setProxyToNone (force = true) {
   if (force || isProxyChanged) {

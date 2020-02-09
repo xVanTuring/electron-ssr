@@ -117,6 +117,7 @@ export async function run (appConfig) {
 
 /**
  * 结束command的后台运行
+ * @returns {Promise<void>}
  */
 export function stop (force = false) {
   if (pythonSSRInstance && !pythonSSRInstance.killed) {
