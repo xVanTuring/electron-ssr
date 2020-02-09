@@ -40,7 +40,7 @@ function readPac () {
     }
   })
 }
-
+let ensurePacPromise = null
 /**
  * pac server
  */
@@ -52,7 +52,10 @@ export async function serverPac (appConfig, isProxyStarted) {
       await ensureHostPortValid(host, port)
       pacServer = http.createServer(async (req, res) => {
         if ((req.url || '').startsWith('/proxy.pac')) {
-          downloadPac().then(() => {
+          if (ensurePacPromise == null) {
+            ensurePacPromise = downloadPac()
+          }
+          ensurePacPromise.then(() => {
             return readPac()
           }).then(buffer => buffer.toString()).then(text => {
             res.writeHead(200, {
