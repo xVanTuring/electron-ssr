@@ -4,7 +4,7 @@ const defaultConfig = {
   // 配置集合
   configs: [],
   // 选中的配置
-  index: 0,
+  index: -1,
   // 是否启用
   enable: true,
   // 开机自启
