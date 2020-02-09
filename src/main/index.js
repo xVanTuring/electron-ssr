@@ -1,6 +1,6 @@
 import { app, powerMonitor } from 'electron'
 import AutoLaunch from 'auto-launch'
-import bootstrap from './bootstrap'
+import bootstrapPromise from './bootstrap'
 import { isQuiting, appConfig$, currentConfig, addConfigs } from './data'
 import { destroyTray } from './tray'
 import './menu'
@@ -33,7 +33,7 @@ if (!isPrimaryInstance) {
       }
     }
   })
-  bootstrap().then(async () => {
+  bootstrapPromise.then(async () => {
     if (isDevelopment) {
       console.log('Ensure Vue Devtools has been installed')
       installVueDevtools().catch(err => {
@@ -106,19 +106,30 @@ if (!isPrimaryInstance) {
   // 由main进程发起的退出
   app.on('before-quit', () => { isQuiting(true) })
 
-  app.on('will-quit', e => {
+  app.on('will-quit', async (e) => {
     logger.debug('will-quit')
     e.preventDefault()
+    const reflect = p => p.then(() => ({ status: 'fulfilled' }),
+      e => ({ e, status: 'rejected' }))
     stopTask()
-    setProxyToNone()
     destroyTray()
     destroyWindow()
-    stopHttpProxyServer()
-    stopPacServer()
     clearShortcuts()
-    stopCommand(true).then(() => {
-      app.exit(0)
+    const asyncTask = [
+      setProxyToNone(),
+      stopHttpProxyServer(),
+      stopPacServer(),
+      stopCommand(true)
+    ]
+    await Promise.all(asyncTask.map(reflect)).then((results) => {
+      for (const result of results) {
+        if (result.status === 'rejected') {
+          logger.error(result.e)
+        }
+      }
     })
+
+    app.exit(0)
   })
 
   app.on('activate', () => {

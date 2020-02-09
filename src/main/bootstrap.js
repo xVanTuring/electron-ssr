@@ -65,10 +65,6 @@ export const privoxyPath = _privoxyPath
 // mac proxy_conf_helper工具目录
 export const macToolPath = path.resolve(appConfigDir, 'proxy_conf_helper')
 export const libsodiumDir = _libsodiumDir
-// try fix linux dismiss bug
-if (isLinux) {
-  process.env.XDG_CURRENT_DESKTOP = 'Unity'
-}
 
 // 在mac上执行sudo命令
 async function sudoMacCommand (command) {
@@ -82,7 +78,6 @@ async function sudoMacCommand (command) {
     })
   })
 }
-
 /**
  * 确保文件存在，目录正常
  */
@@ -105,4 +100,4 @@ async function init () {
   }
   return readyPromise
 }
-export default init
+export default init()
