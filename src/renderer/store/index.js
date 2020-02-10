@@ -348,8 +348,11 @@ export default new Vuex.Store({
       }
     },
     removeEditingGroup (context) {
-      const title = context.state.editingGroup.title
+      let title = context.state.editingGroup.title
       const clone = context.state.appConfig.configs.slice()
+      if (title === '$ungrouped$') {
+        title = ''
+      }
       context.dispatch('updateConfigs', clone.filter(config => config.group !== title))
       context.commit('setSelectedConfigId', (context.state.selectedConfig && context.state.selectedConfig.id) || '')
       context.commit('updateEditingGroup', { show: false, title: '' })
@@ -386,6 +389,11 @@ export default new Vuex.Store({
         return getters.configs.find(config => config.id === state.selection.selectedConfigId)
       }
       return defaultSSRConfig()
+    },
+    buttonState (state) {
+      let deleteEnabled = state.selection.selectedConfigId !== '' || (state.editingGroup && state.editingGroup.title && state.editingGroup.show)
+
+      return !deleteEnabled
     }
   }
 })

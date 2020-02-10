@@ -56,8 +56,8 @@ export default {
       })
     },
     activatedConfigId () {
-      if (this.configs.length > 0) {
-        return this.configs[this.appConfig.index].id || 0
+      if (this.appConfig.index >= 0 && this.configs.length > 0) {
+        return (this.configs[this.appConfig.index] && this.configs[this.appConfig.index].id) || ''
       }
       return ''
     },
