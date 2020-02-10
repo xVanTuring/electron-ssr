@@ -6,7 +6,8 @@ import sudo from 'sudo-prompt'
 import defaultConfig from '../shared/config'
 import { isWin, isMac, isLinux, isOldMacVersion, isPythonInstalled } from '../shared/env'
 import { init as initIcon } from '../shared/icon'
-
+import * as i18n from './locales'
+const $t = i18n.default
 // app ready事件
 export const readyPromise = new Promise(resolve => {
   if (app.isReady()) {
@@ -15,12 +16,11 @@ export const readyPromise = new Promise(resolve => {
     app.once('ready', resolve)
   }
 })
-isPythonInstalled.then((value) => {
+isPythonInstalled.then(async (value) => {
   // 检查python是否安装
   if (!value) {
-    dialog.showErrorBox('警告', '未检测到python' +
-      '\n本程序所使用的后端为python版ssr/ssrr' +
-      '\n请确保已安装python且可正常使用，否则软件可能无法正常运行')
+    await readyPromise
+    dialog.showErrorBox($t('NOTI_PYTHON_MISSING_TITLE'), $t('NOTI_PYTHON_MISSING_DETAIL'))
   }
 })
 

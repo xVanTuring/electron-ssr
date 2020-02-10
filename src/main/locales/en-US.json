@@ -39,5 +39,7 @@
 
     "NOTI_PORT_TAKEN":"Port {port} has been taken",
     "NOTI_CHECK_PORT":"Please check yout port",
-    "NOTI_PROCESS_CANT_KILL":"Process {pid} may not be closed, please try close it manually"
+    "NOTI_PROCESS_CANT_KILL":"Process {pid} may not be closed, please try close it manually",
+    "NOTI_PYTHON_MISSING_TITLE": "No python detected",
+    "NOTI_PYTHON_MISSING_DETAIL": "The backend of this program requires python\n Please Make sure you have it installed"
 }
