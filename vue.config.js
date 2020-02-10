@@ -122,5 +122,8 @@ module.exports = {
       .end()
       .use('svg-to-vue-component')
       .loader('svg-to-vue-component/loader')
+  },
+  configureWebpack: {
+    devtool: 'source-map'
   }
 }
