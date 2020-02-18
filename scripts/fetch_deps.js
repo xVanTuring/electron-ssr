@@ -2,10 +2,14 @@ const request = require('request')
 const os = require('os')
 const path = require('path')
 const fs = require('fs')
-const { ensureDir, copy } = require('fs-extra')
+const { ensureDir, copy, readdir } = require('fs-extra')
 const { exec } = require('child_process')
 const unzipper = require('unzipper')
 const Socks5ClientHttpsAgent = require('socks5-https-client/lib/Agent')
+const tmpDir = path.join(os.tmpdir(), 'electron-ssr-deps-fetch')
+const copyDir = path.join(process.cwd(), 'src', 'lib')
+console.log(`tmpDir: ${tmpDir}`)
+console.log(`copyDir: ${copyDir}`)
 function fetchIndex (url) {
   return new Promise((resolve, reject) => {
     console.log(`Start Fetching: ${url}`)
@@ -30,8 +34,6 @@ function fetchIndex (url) {
     })
   })
 }
-const tmpDir = path.join(os.tmpdir(), 'electron-ssr-deps-fetch')
-const copyDir = path.join(process.cwd(), 'src', 'lib')
 async function getSocks2http () {
   const releaseIndex = 'https://api.github.com/repos/xVanTuring/socks2http-rs/releases/latest'
   let index = await fetchIndex(releaseIndex)
@@ -110,13 +112,26 @@ function downloadFile (url, path) {
     })
   })
 }
-function getLibsodium () {
-  // todo
+async function getLibsodium () {
+  const releaseIndex = 'https://api.github.com/repos/xVanTuring/libsodium-msvc-release/releases/latest'
+  let index = await fetchIndex(releaseIndex)
+  const assets = index['assets']
+  const libsodiumName = 'libsodium.dll'
+  let downloadPath = path.join(tmpDir, libsodiumName)
+  for (const asset of assets) {
+    if (asset['name'] === 'libsodium.dll') {
+      await downloadFile(asset['browser_download_url'], downloadPath)
+      break
+    }
+  }
+  let copiedPath = path.join(copyDir, libsodiumName)
+  console.log(`Copy File to ${copiedPath}`)
+  await copy(downloadPath, copiedPath)
 }
-function extractFile (path) {
+function extractFile (zipPath) {
   return new Promise((resolve, reject) => {
-    console.log(`Start Unzipping ${path}`)
-    fs.createReadStream(path).pipe(unzipper.Extract({ path: tmpDir }))
+    console.log(`Start Unzipping ${zipPath}`)
+    fs.createReadStream(zipPath).pipe(unzipper.Extract({ path: tmpDir }))
       .on('finish', resolve)
       .on('error', reject)
   })
@@ -145,7 +160,18 @@ function withProxy (option) {
 async function main () {
   await ensureDir(tmpDir)
   await getSocks2http()
-  if (process.platform === 'win32') { await getSysProxy() }
+  if (process.platform === 'win32') {
+    await getSysProxy()
+    await getLibsodium()
+  }
+  await printLib()
+}
+async function printLib () {
+  console.log('---LISTING LIB DIR---')
+  let result = await readdir(copyDir)
+  for (const fileName of result) {
+    console.log(path.join(copyDir, fileName))
+  }
 }
 try {
   main()

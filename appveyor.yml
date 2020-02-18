@@ -1,7 +1,7 @@
 # Commented sections below can be used to run tests on the CI server
 # https://simulatedgreg.gitbooks.io/electron-vue/content/en/testing.html#on-the-subject-of-ci-testing
 # https://www.appveyor.com/docs/appveyor-yml/
-version: 0.3.{build}
+version: 0.3.0.{build}
 
 image: Visual Studio 2017
 platform:
