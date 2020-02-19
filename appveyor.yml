@@ -21,10 +21,9 @@ init:
 install:
   - ps: Install-Product node 10 x64
   - yarn
-  - yarn fetch-dep
 
 build_script:
-  - yarn electron:build
+  - yarn fetch-dep && yarn electron:build
 
 test: off
 

@@ -16,14 +16,17 @@ function fetchIndex (url) {
     let option = {
       url: url,
       headers: {
-        'User-Agent': 'request'
+        'User-Agent': 'electron-ssr'
       }
     }
     withProxy(option)
+    withGHToken(option)
     request(option, (err, resp, body) => {
       if (err) {
         reject(err)
       } else {
+        console.log('Response Headers')
+        console.log(resp.headers)
         try {
           resolve(JSON.parse(body))
         } catch (error) {
@@ -37,7 +40,14 @@ function fetchIndex (url) {
 async function getSocks2http () {
   const releaseIndex = 'https://api.github.com/repos/xVanTuring/socks2http-rs/releases/latest'
   let index = await fetchIndex(releaseIndex)
-  const assets = index['assets']
+  let assets = index['assets']
+  if (!(assets && assets.length && assets.length !== 0)) {
+    console.error('assets is invalid')
+    console.log(assets)
+    console.log(index)
+    index = await fetchIndex(releaseIndex)
+    assets = index['assets']
+  }
   let withName = 'linux'
   switch (process.platform) {
     case 'win32':
@@ -120,6 +130,7 @@ function downloadFile (url, path) {
       }
     }
     withProxy(option)
+    withGHToken(option)
     request(option).on('error', reject).pipe(file)
     file.on('close', () => {
       console.log('WRITE DONE!')
@@ -169,6 +180,15 @@ function withProxy (option) {
     }
     console.log(`Using proxy: ${proxy}`)
     option['proxy'] = proxy
+  }
+}
+function withGHToken (option) {
+  if (process.env.GH_TOKEN) {
+    console.log(`Find GH_TOKE ${process.env.GH_TOKEN.substr(0, 10)}...`)
+    if (!option['headers']) {
+      option['headers'] = {}
+    }
+    option['headers']['Authorization'] = `token ${process.env.GH_TOKEN}`
   }
 }
 

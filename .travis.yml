@@ -40,7 +40,6 @@ before_install:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export CXX="g++-8"; fi
 install:
   - yarn --ignore-engines
-  - yarn fetch-dep
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       /sbin/start-stop-daemon \
@@ -56,4 +55,4 @@ install:
     fi
 
 script:
-  - yarn run electron:build
+  - yarn fetch-dep && yarn run electron:build
