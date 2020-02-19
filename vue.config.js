@@ -98,6 +98,12 @@ module.exports = {
               arch: ['x64']
             }
           ]
+        },
+        pacman: {
+          depends: ['dconf', 'libsodium', 'openssl']
+        },
+        rpm: {
+          depends: ['libsodium', 'openssl', 'dconf']
         }
       }
     },
