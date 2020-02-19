@@ -93,7 +93,22 @@ async function getSysProxy () {
   let copiedPath = path.join(copyDir, 'sysproxy.exe')
   await copy(downloadPath, copiedPath)
 }
-
+async function getWindowsKill () {
+  const releaseIndex = 'https://api.github.com/repos/alirdn/windows-kill/releases/latest'
+  let index = await fetchIndex(releaseIndex)
+  const assets = index['assets']
+  let downloadPath = path.join(tmpDir, 'windows-kill.zip')
+  let folderName = ''
+  for (const asset of assets) {
+    if (asset['name'].startsWith('windows-kill_x64')) {
+      folderName = asset['name'].replace('.zip', '')
+      await downloadFile(asset['browser_download_url'], downloadPath)
+      break
+    }
+  }
+  await extractFile(downloadPath)
+  await copy(path.join(tmpDir, folderName, 'windows-kill.exe'), path.join(copyDir, 'windows-kill.exe'))
+}
 function downloadFile (url, path) {
   return new Promise((resolve, reject) => {
     console.log(`Start Downloading: ${url}`)
@@ -163,6 +178,7 @@ async function main () {
   if (process.platform === 'win32') {
     await getSysProxy()
     await getLibsodium()
+    await getWindowsKill()
   }
   await printLib()
 }

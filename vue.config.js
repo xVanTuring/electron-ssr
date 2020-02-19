@@ -18,17 +18,19 @@ const winImages = [
 switch (platform) {
   case 'darwin':
     extraFiles.push({ from: 'src/lib/proxy_conf_helper', to: './' })
+    extraFiles.push({ from: 'src/lib/socks2http', to: './3rdparty/socks2http' })
     files = files.concat(macImages)
     break
   case 'win32':
     extraFiles.push({ from: 'src/lib/sysproxy.exe', to: './3rdparty/sysproxy.exe' })
-    extraFiles.push({ from: 'src/lib/privoxy.exe', to: './3rdparty/privoxy.exe' })
-    extraFiles.push({ from: 'src/lib/mgwz.dll', to: './3rdparty/mgwz.dll' })
+    extraFiles.push({ from: 'src/lib/windowns-kill.exe', to: './3rdparty/windowns-kill.exe' })
+    extraFiles.push({ from: 'src/lib/socks2http.exe', to: './3rdparty/socks2http.exe' })
     extraFiles.push({ from: 'src/lib/libsodium.dll', to: './3rdparty/libsodium.dll' })
     files = files.concat(winImages)
     break
   case 'linux':
     files = files.concat(macImages)
+    extraFiles.push({ from: 'src/lib/socks2http', to: './3rdparty/socks2http' })
 }
 module.exports = {
   pluginOptions: {
