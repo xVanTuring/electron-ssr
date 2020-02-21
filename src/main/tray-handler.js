@@ -1,7 +1,8 @@
 import { app, shell, clipboard } from 'electron'
 import { readJson, writeJson } from 'fs-extra'
 import { join } from 'path'
-import bootstrapPromise, { appConfigPath } from './bootstrap'
+import sudo from 'sudo-prompt'
+import bootstrapPromise, { appConfigPath, exePath, macToolPath } from './bootstrap'
 import logger, { logPath } from './logger'
 import { showWindow, sendData } from './window'
 import { updateAppConfig, currentConfig } from './data'
@@ -129,4 +130,29 @@ export function openURL (url) {
 // 退出
 export function exitApp () {
   app.quit()
+}
+async function sudoMacCommand (command) {
+  return new Promise((resolve, reject) => {
+    sudo.exec(command, { name: 'Electron SSR' }, (error, stdout, stderr) => {
+      if (error || stderr) {
+        reject(error || stderr)
+      } else {
+        resolve(stdout)
+      }
+    })
+  })
+}
+export async function installMacHelpToolTray () {
+  try {
+    await installMacHelpTool()
+    updateAppConfig({ isMacToolInstalled: true })
+  } catch (error) {
+    updateAppConfig({ isMacToolInstalled: false })
+  }
+}
+export async function installMacHelpTool () {
+  const helperPath = process.env.NODE_ENV === 'development'
+    ? join(__dirname, '../src/lib/proxy_conf_helper')
+    : join(exePath, '../../../Contents/proxy_conf_helper')
+  await sudoMacCommand(`cp ${helperPath} "${macToolPath}" && chown root:admin "${macToolPath}" && chmod a+rx "${macToolPath}" && chmod +s "${macToolPath}"`)
 }

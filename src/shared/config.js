@@ -40,7 +40,9 @@ const defaultConfig = {
   autoUpdateSubscribes: true,
   // 订阅服务器自动更新周期，单位：小时
   subscribeUpdateInterval: 24,
-  lang: 'en-US'
+  lang: 'en-US',
+  isMacToolInstalled: false,
+  noMacToolInstall: false
 }
 
 export default defaultConfig
