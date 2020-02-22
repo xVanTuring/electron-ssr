@@ -38,6 +38,7 @@ export const appConfigPath = path.join(appConfigDir, 'gui-config.json')
 export const defaultSSRDownloadDir = path.join(appConfigDir, 'shadowsocksr')
 // pac文件下载目录
 export const pacPath = path.join(appConfigDir, 'pac.txt')
+export const pacRawPath = path.join(appConfigDir, 'pac.raw.txt')
 
 export const privoxyCfgPath = path.join(appConfigDir, 'privoxy.cfg')
 // 记录上次订阅更新时间的文件
