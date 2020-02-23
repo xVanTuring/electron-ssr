@@ -86,7 +86,7 @@ async function renderMenu (appConfig) {
             submenu: [
               { label: $t('MENU_SUB_ADD_SUB_LINK'), click: () => { sendData(events.EVENT_SUBSCRIBE_NEW) } },
               { label: $t('MENU_SUB_ADD_NODE'), click: createNewConfig },
-              { label: $t('MENU_SUB_ADD_FROM_CB') },
+              { label: $t('MENU_SUB_ADD_FROM_CB'), click: handler.importConfigFromClipboard },
               { label: $t('MENU_SUB_ADD_FROM_QR_SCAN'), click: handler.scanQRCode }
             ]
           }
