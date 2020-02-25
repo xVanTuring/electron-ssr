@@ -67,6 +67,9 @@ if (isWin) {
     _s2hPath = path.resolve(__dirname, '../src/lib/socks2http')
   } else {
     _s2hPath = path.join(path.dirname(exePath), './3rdparty/socks2http')
+    if (isMac) {
+      _s2hPath = path.join(path.dirname(exePath), '../3rdparty/socks2http')
+    }
   }
 }
 export const winToolPath = _winToolPath
