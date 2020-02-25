@@ -92,7 +92,8 @@ if (!isPrimaryInstance) {
       // startProxy()
       startTask(currentConfig)
     })
-  }).then(err => {
+  }).catch(err => {
+    logger.error('Failed at bootstrapPromise')
     logger.error(err)
   })
 

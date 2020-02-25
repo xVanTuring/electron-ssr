@@ -17,7 +17,7 @@ const macImages = [
 ]
 switch (platform) {
   case 'darwin':
-    extraFiles.push({ from: 'src/lib/proxy_conf_helper', to: './' })
+    extraFiles.push({ from: 'src/lib/proxy_conf_helper', to: './3rdparty/proxy_conf_helper' })
     extraFiles.push({ from: 'src/lib/socks2http', to: './3rdparty/socks2http' })
     files = files.concat(macImages)
     break
