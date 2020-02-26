@@ -112,10 +112,6 @@ if (!isPrimaryInstance) {
     e.preventDefault()
     const reflect = p => p.then(() => ({ status: 'fulfilled' }),
       e => ({ e, status: 'rejected' }))
-    stopTask()
-    destroyTray()
-    destroyWindow()
-    clearShortcuts()
     const asyncTask = [
       setProxyToNone(),
       stopHttpProxyServer(),
@@ -129,7 +125,10 @@ if (!isPrimaryInstance) {
         }
       }
     })
-
+    stopTask()
+    destroyTray()
+    clearShortcuts()
+    destroyWindow()
     app.exit(0)
   })
 
