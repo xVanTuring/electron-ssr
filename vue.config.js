@@ -104,6 +104,10 @@ module.exports = {
         },
         rpm: {
           depends: ['libsodium', 'openssl', 'dconf']
+        },
+        publish: {
+          'provider': 'github',
+          'owner': process.env.REPO_OWNER || 'shadowsocksrr'
         }
       }
     },
