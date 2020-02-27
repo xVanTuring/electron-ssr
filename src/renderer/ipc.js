@@ -93,3 +93,6 @@ export function openDialog (options) {
     })
   })
 }
+export function saveUpdateTime () {
+  ipcRenderer.send(events.EVENT_SUBSCRIBE_SAVE_TIME)
+}

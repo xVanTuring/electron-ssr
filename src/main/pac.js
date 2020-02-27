@@ -47,7 +47,7 @@ let notified = false
 /**
  * pac server
  */
-export async function serverPac (appConfig, isProxyStarted) {
+async function serverPac (appConfig, isProxyStarted) {
   if (isProxyStarted) {
     const host = currentConfig.shareOverLan ? '0.0.0.0' : '127.0.0.1'
     const port = appConfig.pacPort !== undefined ? appConfig.pacPort : currentConfig.pacPort || 1240

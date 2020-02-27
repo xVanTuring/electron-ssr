@@ -1,6 +1,3 @@
-/**
- * 订阅服务器
- */
 import { readFile, writeFile } from 'fs-extra'
 import { subscribeUpdateFile } from './bootstrap'
 import { appConfig$ } from './data'
@@ -29,12 +26,14 @@ export async function startTask (appConfig, forceUpdate = false) {
     try {
       if (!forceUpdate) {
         const content = await readFile(subscribeUpdateFile, 'utf8')
-        lastUpdateTime = new Date(content.toString())
+        lastUpdateTime = new Date(content)
       }
       const nextUpdateTime = new Date(+lastUpdateTime + intervalTime)
       logger.info('next subscribe update time: %s', nextUpdateTime)
       timeout(nextUpdateTime, intervalTime, appConfig)
     } catch (e) {
+      logger.error('Something wrong while starting subscribe task')
+      logger.error(e)
       update(appConfig)
     }
   }
@@ -56,7 +55,7 @@ function interval (intervalTime, appConfig) {
 }
 
 // 保存最近一次的更新时间
-async function saveUpdateTime () {
+export async function saveUpdateTime () {
   const date = new Date()
   lastUpdateTime = date
   logger.info('last update time: %s', lastUpdateTime)
@@ -89,7 +88,7 @@ appConfig$.subscribe(data => {
   const [appConfig, changed] = data
   // 初始化
   if (changed.length === 0) {
-    startTask(appConfig, false)
+    startTask(appConfig)
   } else {
     if (['autoUpdateSubscribes', 'subscribeUpdateInterval'].some(key => changed.indexOf(key) > -1)) {
       startTask(appConfig)
