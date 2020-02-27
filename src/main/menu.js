@@ -39,23 +39,18 @@ async function renderMenu (appConfig) {
       label: $t('MENU_SETTINGS'),
       submenu: [
         { label: $t('MENU_SUB_SETTING_OPTIONS'), click: handler.showOptions },
-        {
-          label: $t('MENU_SUB_CONFIG_FILE'),
-          submenu: [
-            { label: $t('MENU_SUB_LOAD_CF'), click: handler.importConfigFromFile },
-            { label: $t('MENU_SUB_EXPORT_CF'), click: handler.exportConfigToFile },
-            { label: $t('MENU_SUB_OPEN_CF'), click: handler.openConfigFile }
-          ]
-        },
-        {
-          label: $t('MENU_SUB_ADD'),
-          submenu: [
-            { label: $t('MENU_SUB_ADD_SUB_LINK'), click: () => { sendData(events.EVENT_SUBSCRIBE_NEW) } },
-            { label: $t('MENU_SUB_ADD_NODE'), click: createNewConfig },
-            { label: $t('MENU_SUB_ADD_FROM_CB'), click: handler.importConfigFromClipboard },
-            { label: $t('MENU_SUB_ADD_FROM_QR_SCAN'), click: handler.scanQRCode }
-          ]
-        }
+        { label: $t('MENU_SUB_LOAD_CF'), click: handler.importConfigFromFile },
+        { label: $t('MENU_SUB_EXPORT_CF'), click: handler.exportConfigToFile },
+        { label: $t('MENU_SUB_OPEN_CF'), click: handler.openConfigFile }
+      ]
+    },
+    {
+      label: $t('MENU_SUB_ADD'),
+      submenu: [
+        { label: $t('MENU_SUB_ADD_SUB_LINK'), click: () => { sendData(events.EVENT_SUBSCRIBE_NEW) } },
+        { label: $t('MENU_SUB_ADD_NODE'), click: createNewConfig },
+        { label: $t('MENU_SUB_ADD_FROM_CB'), click: handler.importConfigFromClipboard },
+        { label: $t('MENU_SUB_ADD_FROM_QR_SCAN'), click: handler.scanQRCode }
       ]
     },
     {
