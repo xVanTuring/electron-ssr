@@ -15,6 +15,7 @@ const macImages = [
   '!static/pac?(@2x).png',
   '!static/global?(@2x).png'
 ]
+extraFiles.push({ from: 'src/lib/LICENSE', to: './3rdparty/LICENSE' })
 switch (platform) {
   case 'darwin':
     extraFiles.push({ from: 'src/lib/proxy_conf_helper', to: './3rdparty/proxy_conf_helper' })
