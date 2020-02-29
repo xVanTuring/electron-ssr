@@ -43,7 +43,7 @@
     "chalk": "^3.0.0",
     "cli-progress": "^3.6.0",
     "devtron": "^1.4.0",
-    "electron": "^6.1.7",
+    "electron": "^6.1.9",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "request": "^2.88.2",
