@@ -46,5 +46,6 @@
     "NOTI_PAC_UPDATE_FAILED":"PAC文件更新失败, 请检查你的网络和DNS",
     "NOTI_SHORTCUT_REGISTERED": "检测到 {length} 个全局快捷键注册失败，请在快捷键页面重新设置",
 
-    "NOTI_TYPE_ERROR":"错误"
+    "NOTI_TYPE_ERROR":"错误",
+    "NOTI":"通知"
 }

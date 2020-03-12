@@ -46,5 +46,6 @@
     "NOTI_PAC_UPDATE_FAILED":"PAC Updating Failed, Please check your network and DNS",
     "NOTI_SHORTCUT_REGISTERED": "{length} global failed to registered, go Shortcut Panel and set it again",
 
-    "NOTI_TYPE_ERROR":"Error"
+    "NOTI_TYPE_ERROR":"Error",
+    "NOTI":"Notification"
 }
