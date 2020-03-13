@@ -123,8 +123,8 @@ export function changeProxy (e, mode, appConfig) {
   } else {
     if (isWin && mode === 2 && appConfig.preferHTTPGlobal === -1) {
       dialog.showMessageBox({
-        title: 'Global Proxy',
-        message: 'Windows does not play well with socks5 provide by ssr-python.\nUse HTTP Proxy instead?',
+        title: $t('MENU_SUB_GLOBAL_PROXY'),
+        message: $t('NOTO_WIND_GLOBAL_PROXY'),
         buttons: ['Yes', 'No'],
         type: 'info'
       }).then((response) => {
