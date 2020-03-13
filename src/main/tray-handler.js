@@ -20,7 +20,6 @@ export { updateSubscribes } from './subscribe'
 export function toggleEnable () {
   updateAppConfig({ enable: !currentConfig.enable })
 }
-
 // 切换代理方式
 export function toggleProxy (mode) {
   startProxy(mode)
