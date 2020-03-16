@@ -98,7 +98,7 @@ async function setProxyByMode (mode) {
   } else if (mode === 1) {
     await setProxyToPac(`http://127.0.0.1:${currentConfig.pacPort}/proxy.pac`)
   } else if (mode === 2) {
-    await setProxyToGlobal('127.0.0.1', currentConfig.preferHTTPGlobal ? currentConfig.httpProxyPort : currentConfig.localPort)
+    await setProxyToGlobal('127.0.0.1', (isWin || currentConfig.preferHTTPGlobal) ? currentConfig.httpProxyPort : currentConfig.localPort)
   }
 }
 
@@ -115,9 +115,6 @@ export function switchSystemProxy () {
 export function startProxy (mode) {
   if (mode === undefined) {
     mode = currentConfig.sysProxyMode
-  }
-  if (isWin && mode === 2 && currentConfig.preferHTTPGlobal === 1 && !currentConfig.httpProxyEnable) {
-    updateAppConfig({ httpProxyEnable: true })
   }
   setProxyByMode(mode)
 }
