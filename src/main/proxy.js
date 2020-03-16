@@ -72,7 +72,11 @@ export async function setProxyToGlobal (host, port) {
   } else if (isMac && await pathExists(macToolPath) && !await isOldMacVersion) {
     command = `"${macToolPath}" -m global -p ${port}`
   } else if (isLinux && await isGsettingsAvaliable) {
-    command = `gsettings set org.gnome.system.proxy mode 'manual' && gsettings set org.gnome.system.proxy.socks host '${host}' && gsettings set org.gnome.system.proxy.socks port ${port}`
+    if (currentConfig.preferHTTPGlobal === 1) {
+      command = `gsettings set org.gnome.system.proxy mode 'manual' && gsettings set org.gnome.system.proxy.http host '${host}' && gsettings set org.gnome.system.proxy.http port ${port} && gsettings set org.gnome.system.proxy.https host '${host}' && gsettings set org.gnome.system.proxy.https port ${port}`
+    } else {
+      command = `gsettings set org.gnome.system.proxy mode 'manual' && gsettings set org.gnome.system.proxy.socks host '${host}' && gsettings set org.gnome.system.proxy.socks port ${port}`
+    }
   }
   await runCommand(command)
 }
