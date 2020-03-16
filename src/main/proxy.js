@@ -65,7 +65,7 @@ export async function setProxyToNone (force = true) {
 /**
  * 设置代理为全局
  */
-export async function setProxyToGlobal (host, port) {
+async function setProxyToGlobal (host, port) {
   let command
   if (isWin && await pathExists(winToolPath)) {
     command = `${winToolPath} global ${host}:${port} "localhost;127.*;10.*;172.16.*;172.17.*;172.18.*;172.19.*;172.20.*;172.21.*;172.22.*;172.23.*;172.24.*;172.25.*;172.26.*;172.27.*;172.28.*;172.29.*;172.30.*;172.31.*;192.168.*;<local>"`
@@ -84,7 +84,7 @@ export async function setProxyToGlobal (host, port) {
 /**
  * 设置代理为PAC代理
  */
-export async function setProxyToPac (pacUrl) {
+async function setProxyToPac (pacUrl) {
   let command
   if (isWin && await pathExists(winToolPath)) {
     command = `${winToolPath} pac ${pacUrl}`
