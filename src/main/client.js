@@ -9,7 +9,7 @@ import { isConfigEqual } from '../shared/utils'
 import { showNotification } from './notification'
 import { toggleEnable } from './tray-handler'
 import * as i18n from './locales'
-import { isWin } from '@/shared/env'
+import { isWin, pythonName } from '@/shared/env'
 const $t = i18n.default
 let quitByCommand = false
 /**
@@ -21,8 +21,8 @@ let pythonSSRInstance
  * 运行shell命令并写入到日志中
  * @param {string[]} params 待执行的shell命令
  */
-function runPythonSSR (params) {
-  let command = 'python'
+function runPythonSSR(params) {
+  let command = pythonName
   const commandStr = `${command} ${params.join(' ')}`
   logger.info('run command: %s', commandStr.replace(/-k [\d\w]* /, '-k ****** '))
   if (isWin) {
@@ -71,7 +71,7 @@ function runPythonSSR (params) {
  * 运行ssr
  * @param {Object} appConfig ssr配置
  */
-export async function run (appConfig) {
+export async function run(appConfig) {
   const listenHost = appConfig.shareOverLan ? '0.0.0.0' : '127.0.0.1'
   // 先结束之前的
   await stop()
@@ -123,7 +123,7 @@ export async function run (appConfig) {
  * 结束command的后台运行
  * @returns {Promise<void>}
  */
-export function stop (force = false) {
+export function stop(force = false) {
   if (pythonSSRInstance && !pythonSSRInstance.killed) {
     logger.log('Kill client')
     return new Promise((resolve) => {
@@ -157,7 +157,7 @@ export function stop (force = false) {
  * 根据配置运行SSR命令
  * @param {Object} appConfig 应用配置
  */
-export function runWithConfig (appConfig) {
+export function runWithConfig(appConfig) {
   if (appConfig.ssrPath && appConfig.enable && appConfig.configs && appConfig.index >= 0 && appConfig.configs[appConfig.index]) {
     run(appConfig)
   }
